@@ -1,0 +1,249 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #EAF1FF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* HEADER */
+
+header {
+    display: flex;
+    height: 75px;
+    width: 100%;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: #FFFFFF;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-header {
+    width: 50px;
+    height: 50px;
+}
+
+.bell-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* MAIN */
+
+main {
+    width: 90%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 25px;
+    margin-bottom: 100px;
+}
+
+/* BARRA DE BUSCA */
+
+.busca-container {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 12px;
+    padding: 12px 16px;
+    gap: 12px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.busca-icon {
+    color: #94A3B8;
+    font-size: 16px;
+}
+
+.busca-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    color: #1E293B;
+}
+
+.busca-input::placeholder {
+    color: #94A3B8;
+}
+
+/* FILTROS */
+
+.filtros {
+    display: flex;
+    gap: 10px;
+}
+
+.filtro-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    background-color: #FFFFFF;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filtro-btn.active {
+    background-color: #0F172A;
+    color: #FFFFFF;
+    border-color: #0F172A;
+}
+
+/* SEÇÃO DE TRANSAÇÕES */
+
+.secao-transacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-grupo {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1E293B;
+    margin-top: 5px;
+}
+
+.card-transacoes {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-transacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.info-esquerda {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.icone-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.badge-carrinho {
+    background-color: #FFE4E6;
+    color: #E11D48;
+}
+
+.badge-transporte {
+    background-color: #E0F2FE;
+    color: #0284C7;
+}
+
+.badge-salario {
+    background-color: #DCFCE7;
+    color: #16A34A;
+}
+
+.badge-restaurante {
+    background-color: #DBEAFE;
+    color: #2563EB;
+}
+
+.detalhes {
+    display: flex;
+    flex-direction: column;
+}
+
+.detalhes h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.detalhes span {
+    font-size: 12px;
+    color: #64748B;
+}
+
+.valor {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.valor.negativo {
+    color: #DC2626;
+}
+
+.valor.positivo {
+    color: #16A34A;
+}
+
+.divisor {
+    height: 1px;
+    background-color: #F1F5F9;
+    margin: 8px 0;
+}
+
+/* BARRA DE NAVEGAÇÃO */
+
+.barra-navegacao {
+    height: 80px;
+    width: 100%;
+    background-color: #FFFFFF;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 24px;
+    box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.barra-navegacao > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #64748B;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.barra-navegacao > div:hover {
+    color: #0E8354;
+}
+
+.barra-navegacao > div.active {
+    color: #0E8354;
+}
+
+.barra-navegacao > div > span {
+    font-size: 12px;
+}

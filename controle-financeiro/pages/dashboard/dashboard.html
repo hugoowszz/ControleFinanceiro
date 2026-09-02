@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Dashboard - Porkito</title>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img src="/src/icon.png" alt="Porkito Icon" class="icon-header">
+            <h2>Porkito</h2>
+        </div>
+        <i class="fa-regular fa-bell bell-icon"></i>
+    </header>
+
+    <main>
+        <!-- SALDO TOTAL -->
+        <div class="saldo">
+            <h1>Saldo Total</h1>
+            <h2>R$ 124.560,00</h2>
+        </div>
+
+        <!-- GRÁFICO DE BARRAS (ÚLTIMOS 3 MESES) -->
+        <div class="grafico-entradas-saidas">
+            <div class="grafico-header">
+                <h2>Fluxo Financeiro <span class="periodo">(Últimos 3 Meses)</span></h2>
+                <div class="grafico-legenda">
+                    <span class="legenda-item"><span class="ponto ponto-verde"></span> Entradas</span>
+                    <span class="legenda-item"><span class="ponto ponto-vermelho"></span> Saídas</span>
+                </div>
+            </div>
+            <div class="canvas-container">
+                <canvas id="graficoFluxo"></canvas>
+            </div>
+        </div>
+
+        <!-- TRANSAÇÕES RECENTES -->
+        <div class="transacoes">
+            <div class="transacoes-header">
+                <h2>Transações Recentes</h2>
+            </div>
+            
+            <div class="lista-transacoes-recentes">
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-carrinho">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Supermercado</h4>
+                            <span>Hoje, 10:24</span>
+                        </div>
+                    </div>
+                    <span class="valor negativo">-R$ 124,50</span>
+                </div>
+
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-salario">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Salário Depositado</h4>
+                            <span>Ontem, 09:00</span>
+                        </div>
+                    </div>
+                    <span class="valor positivo">+R$ 4.200,00</span>
+                </div>
+
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-carro">
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Seguro Automotivo</h4>
+                            <span>24 Out, 2023</span>
+                        </div>
+                    </div>
+                    <span class="valor negativo">-R$ 180,00</span>
+                </div>
+
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-restaurante">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Jantar com Cliente</h4>
+                            <span>22 Out, 2023</span>
+                        </div>
+                    </div>
+                    <span class="valor negativo">-R$ 85,20</span>
+                </div>
+            </div>
+
+            <div class="transacoes-footer">
+                <a href="/pages/transacoes/transacoes.html" class="link-ver-todas">Ver Todas as Transações</a>
+            
+            </div>
+        </div>
+    </main>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <div class="barra-navegacao">
+        <div class="active" onclick="window.location.href='/pages/dashboard/dashboard.html'">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>Dashboard</span>
+        </div>
+        <div onclick="window.location.href='/pages/transacoes/transacoes.html'">
+            <i class="fa-solid fa-receipt"></i>
+            <span>Transações</span>
+        </div>
+        <div onclick="window.location.href='/pages/relatorios/relatorios.html'">
+            <i class="fa-solid fa-piggy-bank"></i>
+            <span>Relatórios</span>
+        </div>
+        <div onclick="window.location.href='/pages/configuracoes/configuracoes.html'">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Configurações</span>
+        </div>
+    </div>
+
+    <!-- INICIALIZAÇÃO DO CHART.JS (BARRAS - ÚLTIMOS 3 MESES) -->
+    <script>
+        const ctx = document.getElementById('graficoFluxo').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Agosto', 'Setembro', 'Outubro'],
+                datasets: [
+                    {
+                        label: 'Entradas',
+                        data: [4800, 5600, 6250],
+                        backgroundColor: '#10B981',
+                        borderSkipped: false,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.6
+                    },
+                    {
+                        label: 'Saídas',
+                        data: [2900, 3450, 3120],
+                        backgroundColor: '#EF4444',
+                        borderSkipped: false,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#0F172A',
+                        titleFont: { family: 'Poppins', size: 12 },
+                        bodyFont: { family: 'Poppins', size: 13, weight: '600' },
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: true,
+                        boxWidth: 8,
+                        boxHeight: 8,
+                        usePointStyle: true,
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.dataset.label + ': R$ ' + context.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                family: 'Poppins',
+                                size: 12,
+                                weight: '500'
+                            },
+                            color: '#64748B'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: '#F1F5F9',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                family: 'Poppins',
+                                size: 11
+                            },
+                            color: '#94A3B8',
+                            callback: function(value) {
+                                return 'R$ ' + (value >= 1000 ? (value / 1000) + 'k' : value);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

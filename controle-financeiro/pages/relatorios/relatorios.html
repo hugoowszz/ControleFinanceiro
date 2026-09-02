@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="relatorios.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <title>Planejamento e Relatórios - Porkito</title>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img src="/src/icon.png" alt="Porkito Icon" class="icon-header">
+            <h2>Porkito</h2>
+        </div>
+        <i class="fa-regular fa-bell bell-icon"></i>
+    </header>
+
+    <main>
+        <div class="titulo-secao">
+            <h1>Planejamento</h1>
+        </div>
+
+        <!-- CARD 1: METAS DE ECONOMIA -->
+        <div class="card-planejamento">
+            <div class="card-header">
+                <div class="header-titulo">
+                    <i class="fa-solid fa-piggy-bank icone-verde"></i>
+                    <h2>Metas de Economia</h2>
+                </div>
+                <button class="btn-nova-meta">+ Nova Meta</button>
+            </div>
+
+            <div class="lista-itens">
+                <div class="item-meta">
+                    <div class="meta-info">
+                        <span class="meta-nome">Carro Novo</span>
+                        <div class="meta-valores">
+                            <span class="meta-progresso-txt">R$ 15.000 / R$ 30.000</span>
+                            <span class="meta-porcentagem">50%</span>
+                        </div>
+                    </div>
+                    <div class="barra-progresso-fundo">
+                        <div class="barra-progresso-preenchimento verde" style="width: 50%;"></div>
+                    </div>
+                </div>
+
+                <div class="item-meta">
+                    <div class="meta-info">
+                        <span class="meta-nome">Reserva de Emergência</span>
+                        <div class="meta-valores">
+                            <span class="meta-progresso-txt">R$ 8.000 / R$ 10.000</span>
+                            <span class="meta-porcentagem">80%</span>
+                        </div>
+                    </div>
+                    <div class="barra-progresso-fundo">
+                        <div class="barra-progresso-preenchimento verde" style="width: 80%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2: ORÇAMENTO MENSAL -->
+        <div class="card-planejamento">
+            <div class="card-header">
+                <div class="header-titulo">
+                    <i class="fa-solid fa-chart-pie icone-verde"></i>
+                    <h2>Orçamento Mensal</h2>
+                </div>
+                <span class="data-subtitulo">Maio 2024</span>
+            </div>
+
+            <div class="lista-itens">
+                <div class="item-meta">
+                    <div class="meta-info">
+                        <span class="meta-nome">Moradia</span>
+                        <span class="meta-progresso-txt">R$ 1.200 / R$ 1.500</span>
+                    </div>
+                    <div class="barra-progresso-fundo">
+                        <div class="barra-progresso-preenchimento verde" style="width: 80%;"></div>
+                    </div>
+                </div>
+
+                <div class="item-meta">
+                    <div class="meta-info">
+                        <span class="meta-nome">Alimentação</span>
+                        <span class="meta-progresso-txt">R$ 450 / R$ 400</span>
+                    </div>
+                    <div class="barra-progresso-fundo">
+                        <div class="barra-progresso-preenchimento vermelho" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="item-meta">
+                    <div class="meta-info">
+                        <span class="meta-nome">Entretenimento</span>
+                        <span class="meta-progresso-txt">R$ 120 / R$ 200</span>
+                    </div>
+                    <div class="barra-progresso-fundo">
+                        <div class="barra-progresso-preenchimento verde" style="width: 60%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <div class="barra-navegacao">
+        <div onclick="window.location.href='/pages/dashboard/dashboard.html'">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>Dashboard</span>
+        </div>
+        <div onclick="window.location.href='/pages/transacoes/transacoes.html'">
+            <i class="fa-solid fa-receipt"></i>
+            <span>Transações</span>
+        </div>
+        <div class="active" onclick="window.location.href='/pages/relatorios/relatorios.html'">
+            <i class="fa-solid fa-piggy-bank"></i>
+            <span>Relatórios</span>
+        </div>
+        <div onclick="window.location.href='/pages/configuracoes/configuracoes.html'">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Configurações</span>
+        </div>
+    </div>
+</body>
+</html>

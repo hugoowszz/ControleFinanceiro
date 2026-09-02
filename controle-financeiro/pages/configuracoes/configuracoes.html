@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="configuracoes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <title>Meu Perfil e Configurações - Porkito</title>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img src="/src/icon.png" alt="Porkito Icon" class="icon-header">
+            <h2>Porkito</h2>
+        </div>
+        <i class="fa-regular fa-bell bell-icon"></i>
+    </header>
+
+    <main>
+        <!-- SEÇÃO DO PERFIL -->
+        <div class="perfil-topo">
+            <div class="avatar-container">
+                <div class="avatar-img-placeholder">
+                    <i class="fa-solid fa-user avatar-icon"></i>
+                </div>
+                <button class="btn-editar-avatar">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+            </div>
+            <h2 class="nome-usuario">Victor Hugo</h2>
+        </div>
+
+        <!-- LISTA DE CONFIGURAÇÕES -->
+        <div class="lista-opcoes">
+            <div class="opcao-card">
+                <div class="opcao-esquerda">
+                    <div class="opcao-icone">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="opcao-info">
+                        <h3>Configurações da Conta</h3>
+                        <span>Atualizar dados pessoais e preferências</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-icon"></i>
+            </div>
+
+            <div class="opcao-card">
+                <div class="opcao-esquerda">
+                    <div class="opcao-icone">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="opcao-info">
+                        <h3>Segurança</h3>
+                        <span>Senha, 2FA e sessões ativas</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-icon"></i>
+            </div>
+
+            <div class="opcao-card">
+                <div class="opcao-esquerda">
+                    <div class="opcao-icone">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div class="opcao-info">
+                        <h3>Bancos Conectados</h3>
+                        <span>Gerenciar contas e cartões vinculados</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-icon"></i>
+            </div>
+
+            <div class="opcao-card">
+                <div class="opcao-esquerda">
+                    <div class="opcao-icone">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <div class="opcao-info">
+                        <h3>Notificações</h3>
+                        <span>Alertas, resumos e avisos</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-icon"></i>
+            </div>
+        </div>
+
+        <!-- BOTÃO SAIR -->
+        <button class="btn-sair">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            Encerrar Sessão
+        </button>
+    </main>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <div class="barra-navegacao">
+        <div onclick="window.location.href='/pages/dashboard/dashboard.html'">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>Dashboard</span>
+        </div>
+        <div onclick="window.location.href='/pages/transacoes/transacoes.html'">
+            <i class="fa-solid fa-receipt"></i>
+            <span>Transações</span>
+        </div>
+        <div onclick="window.location.href='/pages/relatorios/relatorios.html'">
+            <i class="fa-solid fa-piggy-bank"></i>
+            <span>Relatórios</span>
+        </div>
+        <div class="active" onclick="window.location.href='/pages/configuracoes/configuracoes.html'">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Configurações</span>
+        </div>
+    </div>
+</body>
+</html>

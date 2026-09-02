@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="transacoes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <title>Histórico de Transações - Porkito</title>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img src="/src/icon.png" alt="Porkito Icon" class="icon-header">
+            <h2>Porkito</h2>
+        </div>
+        <i class="fa-regular fa-bell bell-icon"></i>
+    </header>
+
+    <main>
+        <!-- BARRA DE BUSCA -->
+        <div class="busca-container">
+            <i class="fa-solid fa-magnifying-glass busca-icon"></i>
+            <input type="text" placeholder="Buscar transações..." class="busca-input">
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <button class="filtro-btn active">Todas</button>
+            <button class="filtro-btn">Entradas</button>
+            <button class="filtro-btn">Saídas</button>
+        </div>
+
+        <!-- SEÇÃO HOJE -->
+        <div class="secao-transacoes">
+            <h3 class="data-grupo">Hoje, 24 de Outubro</h3>
+            <div class="card-transacoes">
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-carrinho">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Supermercado Carrefour</h4>
+                            <span>14:30 • Alimentação</span>
+                        </div>
+                    </div>
+                    <span class="valor negativo">-R$ 84,50</span>
+                </div>
+
+                <div class="divisor"></div>
+
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-transporte">
+                            <i class="fa-solid fa-train"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Metrô Transporte</h4>
+                            <span>08:15 • Transporte</span>
+                        </div>
+                    </div>
+                    <span class="valor negativo">-R$ 2,75</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEÇÃO ONTEM -->
+        <div class="secao-transacoes">
+            <h3 class="data-grupo">Ontem, 23 de Outubro</h3>
+            <div class="card-transacoes">
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-salario">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Salário Tech Corp</h4>
+                            <span>09:00 • Salário</span>
+                        </div>
+                    </div>
+                    <span class="valor positivo">+R$ 4.250,00</span>
+                </div>
+
+                <div class="divisor"></div>
+
+                <div class="item-transacao">
+                    <div class="info-esquerda">
+                        <div class="icone-badge badge-restaurante">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <div class="detalhes">
+                            <h4>Bistrô Central</h4>
+                            <span>19:45 • Alimentação</span>
+                        </div>
+                    </div>
+                    <span class="valor negativo">-R$ 65,20</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <div class="barra-navegacao">
+        <div onclick="window.location.href='/pages/dashboard/dashboard.html'">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>Dashboard</span>
+        </div>
+        <div class="active" onclick="window.location.href='/pages/transacoes/transacoes.html'">
+            <i class="fa-solid fa-receipt"></i>
+            <span>Transações</span>
+        </div>
+        <div onclick="window.location.href='/pages/relatorios/relatorios.html'">
+            <i class="fa-solid fa-piggy-bank"></i>
+            <span>Relatórios</span>
+        </div>
+        <div onclick="window.location.href='/pages/configuracoes/configuracoes.html'">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Configurações</span>
+        </div>
+    </div>
+</body>
+</html>

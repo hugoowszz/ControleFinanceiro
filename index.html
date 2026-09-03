@@ -8,82 +8,44 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
-    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <title>Dashboard - Porkito</title>
     <style>
-        /* Estilos do Modal de Nova Transação */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            z-index: 1000; align-items: center; justify-content: center; padding: 20px;
         }
         .modal-card {
-            background: #1E293B;
-            width: 100%;
-            max-width: 440px;
-            border-radius: 20px;
-            padding: 26px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #F8FAFC;
+            background: #1E293B; width: 100%; max-width: 440px; border-radius: 20px; padding: 26px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: #F8FAFC;
         }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .modal-header h3 { font-size: 20px; color: #10B981; }
-        .modal-close {
-            background: none; border: none; color: #94A3B8;
-            font-size: 20px; cursor: pointer;
-        }
-        .modal-form .form-group {
-            margin-bottom: 14px;
-        }
-        .modal-form label {
-            display: block; font-size: 13px; color: #94A3B8; margin-bottom: 6px;
-        }
+        .modal-close { background: none; border: none; color: #94A3B8; font-size: 20px; cursor: pointer; }
+        .modal-form .form-group { margin-bottom: 14px; }
+        .modal-form label { display: block; font-size: 13px; color: #94A3B8; margin-bottom: 6px; }
         .modal-form input, .modal-form select {
-            width: 100%;
-            padding: 11px 14px;
-            background: #0F172A;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #F8FAFC;
-            font-size: 14px;
-            outline: none;
+            width: 100%; padding: 11px 14px; background: #0F172A;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #F8FAFC; font-size: 14px; outline: none;
         }
-        .modal-form input:focus, .modal-form select:focus {
-            border-color: #10B981;
-        }
+        .modal-form input:focus, .modal-form select:focus { border-color: #10B981; }
         .modal-btn-salvar {
-            width: 100%;
-            padding: 13px;
-            background: #10B981;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
+            width: 100%; padding: 13px; background: #10B981; color: white; border: none;
+            border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px;
         }
         .modal-btn-salvar:hover { background: #059669; }
-        .empty-state {
-            text-align: center;
-            padding: 30px 10px;
-            color: #64748B;
-            font-size: 14px;
-        }
+        .empty-state { text-align: center; padding: 30px 10px; color: #64748B; font-size: 14px; }
+        .badge-entrada { background: rgba(16,185,129,0.15); color: #10B981; }
+        .badge-saida   { background: rgba(239,68,68,0.15);  color: #EF4444; }
+        .valor.positivo { color: #10B981; font-weight: 600; }
+        .valor.negativo { color: #EF4444; font-weight: 600; }
+        .saldo-resumo { display: flex; gap: 12px; margin-bottom: 8px; }
+        .saldo-card { flex: 1; background: #1E293B; border-radius: 14px; padding: 14px 16px; border: 1px solid rgba(255,255,255,0.07); }
+        .saldo-card .label { font-size: 11px; color: #64748B; margin-bottom: 4px; }
+        .saldo-card .valor-card { font-size: 17px; font-weight: 700; }
+        .verde { color: #10B981; }
+        .vermelho { color: #EF4444; }
     </style>
 </head>
 <body>
@@ -92,25 +54,37 @@
             <img src="./src/icon.png" alt="Porkito Icon" class="icon-header">
             <div>
                 <h2>Porkito</h2>
-                <span id="userGreeting" style="font-size: 11px; color: #94A3B8; display: block;">Olá!</span>
+                <span id="userGreeting" style="font-size:11px;color:#94A3B8;display:block;">Olá!</span>
             </div>
         </div>
-        <i class="fa-regular fa-bell bell-icon" onclick="carregarDadosDashboard()" title="Atualizar dados"></i>
+        <i class="fa-regular fa-bell bell-icon" onclick="carregarDados()" title="Atualizar"></i>
     </header>
 
     <main>
-        <!-- SALDO TOTAL / TOTAL GASTOS -->
-        <div class="saldo">
-            <h1>Total de Gastos</h1>
-            <h2 id="valorTotalGastos">R$ 0,00</h2>
+        <!-- RESUMO ENTRADA/SAÍDA -->
+        <div class="saldo-resumo">
+            <div class="saldo-card">
+                <div class="label">⬆️ Total Entradas</div>
+                <div class="valor-card verde" id="totalEntradas">R$ 0,00</div>
+            </div>
+            <div class="saldo-card">
+                <div class="label">⬇️ Total Saídas</div>
+                <div class="valor-card vermelho" id="totalSaidas">R$ 0,00</div>
+            </div>
         </div>
 
-        <!-- GRÁFICO DE BARRAS (ÚLTIMOS 3 MESES) -->
+        <div class="saldo">
+            <h1>Saldo Atual</h1>
+            <h2 id="saldoAtual">R$ 0,00</h2>
+        </div>
+
+        <!-- GRÁFICO -->
         <div class="grafico-entradas-saidas">
             <div class="grafico-header">
-                <h2>Fluxo de Gastos <span class="periodo">(Histórico Mensal)</span></h2>
+                <h2>Fluxo Mensal <span class="periodo">(Últimos 3 meses)</span></h2>
                 <div class="grafico-legenda">
-                    <span class="legenda-item"><span class="ponto ponto-vermelho"></span> Despesas</span>
+                    <span class="legenda-item"><span class="ponto" style="background:#10B981;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;"></span> Entradas</span>
+                    <span class="legenda-item" style="margin-left:12px;"><span class="ponto" style="background:#EF4444;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;"></span> Saídas</span>
                 </div>
             </div>
             <div class="canvas-container">
@@ -120,57 +94,44 @@
 
         <!-- TRANSAÇÕES RECENTES -->
         <div class="transacoes">
-            <div class="transacoes-header">
-                <h2>Transações Recentes</h2>
+            <div class="transacoes-header"><h2>Movimentações Recentes</h2></div>
+            <div class="lista-transacoes-recentes" id="listaRecentes">
+                <div class="empty-state"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;margin-bottom:8px;"></i><p>Carregando...</p></div>
             </div>
-            
-            <div class="lista-transacoes-recentes" id="listaTransacoesRecentes">
-                <div class="empty-state">
-                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 8px;"></i>
-                    <p>Carregando transações...</p>
-                </div>
-            </div>
-
             <div class="transacoes-footer">
-                <a href="./pages/transacoes/transacoes.html" class="link-ver-todas">Ver Todas as Transações</a>
-                <button class="btn-flutuante" onclick="abrirModalNovaTransacao()" title="Nova Transação">
+                <a href="./pages/transacoes/transacoes.html" class="link-ver-todas">Ver Todas</a>
+                <button class="btn-flutuante" onclick="abrirModal()" title="Nova Movimentação">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
         </div>
     </main>
 
-    <!-- BARRA DE NAVEGAÇÃO -->
     <div class="barra-navegacao">
-        <div class="active" onclick="window.location.href='./index.html'">
-            <i class="fa-solid fa-building-columns"></i>
-            <span>Dashboard</span>
-        </div>
-        <div onclick="window.location.href='./pages/transacoes/transacoes.html'">
-            <i class="fa-solid fa-receipt"></i>
-            <span>Transações</span>
-        </div>
-        <div onclick="window.location.href='./pages/relatorios/relatorios.html'">
-            <i class="fa-solid fa-piggy-bank"></i>
-            <span>Relatórios</span>
-        </div>
-        <div onclick="window.location.href='./pages/configuracoes/configuracoes.html'">
-            <i class="fa-solid fa-user-gear"></i>
-            <span>Configurações</span>
-        </div>
+        <div class="active" onclick="window.location.href='./index.html'"><i class="fa-solid fa-building-columns"></i><span>Dashboard</span></div>
+        <div onclick="window.location.href='./pages/transacoes/transacoes.html'"><i class="fa-solid fa-receipt"></i><span>Transações</span></div>
+        <div onclick="window.location.href='./pages/relatorios/relatorios.html'"><i class="fa-solid fa-piggy-bank"></i><span>Relatórios</span></div>
+        <div onclick="window.location.href='./pages/configuracoes/configuracoes.html'"><i class="fa-solid fa-user-gear"></i><span>Configurações</span></div>
     </div>
 
-    <!-- MODAL NOVA TRANSAÇÃO -->
-    <div class="modal-overlay" id="modalNovaTransacao">
+    <!-- MODAL NOVA MOVIMENTAÇÃO -->
+    <div class="modal-overlay" id="modalNova">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>Novo Gasto</h3>
-                <button class="modal-close" onclick="fecharModalNovaTransacao()">&times;</button>
+                <h3>Nova Movimentação</h3>
+                <button class="modal-close" onclick="fecharModal()">&times;</button>
             </div>
-            <form class="modal-form" onsubmit="salvarNovaTransacao(event)">
+            <form class="modal-form" onsubmit="salvar(event)">
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <select id="inputTipo">
+                        <option value="SAIDA">⬇️ Saída (Gasto)</option>
+                        <option value="ENTRADA">⬆️ Entrada (Receita)</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="inputDescricao">Descrição</label>
-                    <input type="text" id="inputDescricao" placeholder="Ex: Supermercado, Gasolina" required>
+                    <input type="text" id="inputDescricao" placeholder="Ex: Salário, Padaria" required>
                 </div>
                 <div class="form-group">
                     <label for="inputValor">Valor (R$)</label>
@@ -178,9 +139,7 @@
                 </div>
                 <div class="form-group">
                     <label for="selectCategoria">Categoria</label>
-                    <select id="selectCategoria">
-                        <option value="">Sem categoria</option>
-                    </select>
+                    <select id="selectCategoria"><option value="">Sem categoria</option></select>
                 </div>
                 <div class="form-group">
                     <label for="selectFormaPagamento">Forma de Pagamento</label>
@@ -197,225 +156,150 @@
                     <label for="inputData">Data</label>
                     <input type="date" id="inputData" required>
                 </div>
-                <button type="submit" class="modal-btn-salvar" id="btnSalvarGasto">Registrar Gasto</button>
+                <button type="submit" class="modal-btn-salvar" id="btnSalvar">Registrar</button>
             </form>
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script src="api.js"></script>
     <script>
         verificarAutenticacao();
 
         const usuario = getUsuarioLogado();
-        if (usuario && usuario.nome) {
-            document.getElementById('userGreeting').innerText = `Olá, ${usuario.nome}!`;
-        }
-
-        // Configuração de Data de Hoje no Modal
+        if (usuario?.nome) document.getElementById('userGreeting').innerText = `Olá, ${usuario.nome}!`;
         document.getElementById('inputData').value = new Date().toISOString().split('T')[0];
 
         let chartInstance = null;
-        let listaCategorias = [];
 
-        function getIconeBadge(descricao, formaPagamento) {
-            const desc = (descricao || '').toLowerCase();
-            if (desc.includes('mercado') || desc.includes('padaria') || desc.includes('supermercado') || desc.includes('compras')) {
-                return { classe: 'badge-carrinho', icone: 'fa-cart-shopping' };
-            }
-            if (desc.includes('carro') || desc.includes('uber') || desc.includes('gasolina') || desc.includes('combustivel') || desc.includes('transporte')) {
-                return { classe: 'badge-carro', icone: 'fa-car' };
-            }
-            if (desc.includes('almoço') || desc.includes('jantar') || desc.includes('restaurante') || desc.includes('lanche') || desc.includes('pizza') || desc.includes('ifood')) {
-                return { classe: 'badge-restaurante', icone: 'fa-utensils' };
-            }
-            return { classe: 'badge-salario', icone: 'fa-money-bill-wave' };
-        }
-
-        async function carregarDadosDashboard() {
+        async function carregarDados() {
             try {
-                // Carrega categorias e gastos simultaneamente
-                const [gastos, categorias] = await Promise.all([
-                    API.getGastos(),
+                const [movimentacoes, categorias] = await Promise.all([
+                    API.getMovimentacoes(),
                     API.getCategorias()
                 ]);
 
-                listaCategorias = categorias || [];
-                atualizarSelectCategorias();
+                const lista = movimentacoes || [];
+                const cats = categorias || [];
 
-                // Calcula total de gastos
-                const total = (gastos || []).reduce((acc, g) => acc + (Number(g.valor) || 0), 0);
-                document.getElementById('valorTotalGastos').innerText = formatarMoeda(total);
+                // Atualiza select de categorias
+                document.getElementById('selectCategoria').innerHTML =
+                    '<option value="">Sem categoria</option>' +
+                    cats.map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
 
-                // Renderiza Transações Recentes
-                renderizarTransacoesRecentes(gastos || []);
+                const entradas = lista.filter(m => m.tipo === 'ENTRADA').reduce((s, m) => s + m.valor, 0);
+                const saidas   = lista.filter(m => m.tipo === 'SAIDA').reduce((s, m) => s + m.valor, 0);
+                const saldo    = entradas - saidas;
 
-                // Atualiza Gráfico
-                atualizarGraficoFluxo(gastos || []);
+                document.getElementById('totalEntradas').innerText = formatarMoeda(entradas);
+                document.getElementById('totalSaidas').innerText   = formatarMoeda(saidas);
+                const elSaldo = document.getElementById('saldoAtual');
+                elSaldo.innerText = formatarMoeda(saldo);
+                elSaldo.style.color = saldo >= 0 ? '#10B981' : '#EF4444';
 
-            } catch (error) {
-                console.error('Erro ao carregar dados do dashboard:', error);
+                renderizarRecentes(lista);
+                atualizarGrafico(lista);
+            } catch (e) {
+                console.error('Erro ao carregar dados:', e);
             }
         }
 
-        function renderizarTransacoesRecentes(gastos) {
-            const container = document.getElementById('listaTransacoesRecentes');
-            if (!gastos || gastos.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fa-solid fa-receipt" style="font-size: 28px; margin-bottom: 8px; color: #475569;"></i>
-                        <p>Nenhum gasto registrado ainda.</p>
-                        <p style="font-size: 12px; margin-top: 4px; color: #10B981; cursor: pointer;" onclick="abrirModalNovaTransacao()">+ Cadastrar primeiro gasto</p>
-                    </div>
-                `;
+        function renderizarRecentes(lista) {
+            const container = document.getElementById('listaRecentes');
+            if (!lista.length) {
+                container.innerHTML = `<div class="empty-state"><i class="fa-solid fa-receipt" style="font-size:28px;color:#475569;"></i><p>Nenhuma movimentação ainda.</p></div>`;
                 return;
             }
-
-            // Ordena por data decrescente e pega os últimos 4
-            const recentes = [...gastos].sort((a, b) => new Date(b.data || 0) - new Date(a.data || 0)).slice(0, 4);
-
-            container.innerHTML = recentes.map(g => {
-                const badge = getIconeBadge(g.descricao, g.formaPagamento);
+            const recentes = [...lista].sort((a,b) => new Date(b.data||0) - new Date(a.data||0)).slice(0,4);
+            container.innerHTML = recentes.map(m => {
+                const entrada = m.tipo === 'ENTRADA';
                 return `
                     <div class="item-transacao">
                         <div class="info-esquerda">
-                            <div class="icone-badge ${badge.classe}">
-                                <i class="fa-solid ${badge.icone}"></i>
+                            <div class="icone-badge ${entrada ? 'badge-entrada' : 'badge-saida'}">
+                                <i class="fa-solid ${entrada ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
                             </div>
                             <div class="detalhes">
-                                <h4>${g.descricao || 'Sem descrição'}</h4>
-                                <span>${formatarData(g.data)} • ${g.formaPagamento || 'Dinheiro'}</span>
+                                <h4>${m.descricao || 'Sem descrição'}</h4>
+                                <span>${formatarData(m.data)} • ${m.formaPagamento || 'Dinheiro'}</span>
                             </div>
                         </div>
-                        <span class="valor negativo">-${formatarMoeda(g.valor)}</span>
-                    </div>
-                `;
+                        <span class="valor ${entrada ? 'positivo' : 'negativo'}">${entrada ? '+' : '-'}${formatarMoeda(m.valor)}</span>
+                    </div>`;
             }).join('');
         }
 
-        function atualizarGraficoFluxo(gastos) {
-            const mesesNomes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        function atualizarGrafico(lista) {
+            const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
             const hoje = new Date();
-            const mesesLabels = [];
-            const dadosMeses = [0, 0, 0];
-
-            // Pega os últimos 3 meses
-            for (let i = 2; i >= 0; i--) {
-                const d = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
-                mesesLabels.push(mesesNomes[d.getMonth()]);
+            const labels = [], dadosEntrada = [0,0,0], dadosSaida = [0,0,0];
+            for (let i=2;i>=0;i--) {
+                const d = new Date(hoje.getFullYear(), hoje.getMonth()-i, 1);
+                labels.push(meses[d.getMonth()]);
             }
-
-            // Soma os gastos por mês
-            (gastos || []).forEach(g => {
-                if (!g.data) return;
-                const dGasto = new Date(g.data + 'T00:00:00');
-                const diffMeses = (hoje.getFullYear() - dGasto.getFullYear()) * 12 + (hoje.getMonth() - dGasto.getMonth());
-                if (diffMeses >= 0 && diffMeses <= 2) {
-                    const index = 2 - diffMeses;
-                    dadosMeses[index] += Number(g.valor) || 0;
+            lista.forEach(m => {
+                if (!m.data) return;
+                const d = new Date(m.data + 'T00:00:00');
+                const diff = (hoje.getFullYear()-d.getFullYear())*12 + (hoje.getMonth()-d.getMonth());
+                if (diff >= 0 && diff <= 2) {
+                    const idx = 2 - diff;
+                    if (m.tipo === 'ENTRADA') dadosEntrada[idx] += m.valor;
+                    else dadosSaida[idx] += m.valor;
                 }
             });
-
             const ctx = document.getElementById('graficoFluxo').getContext('2d');
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
-
+            if (chartInstance) chartInstance.destroy();
             chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: mesesLabels,
+                    labels,
                     datasets: [
-                        {
-                            label: 'Despesas',
-                            data: dadosMeses,
-                            backgroundColor: '#EF4444',
-                            borderSkipped: false,
-                            barPercentage: 0.6,
-                            borderRadius: 6
-                        }
+                        { label: 'Entradas', data: dadosEntrada, backgroundColor: '#10B981', borderRadius: 6, barPercentage: 0.5 },
+                        { label: 'Saídas',   data: dadosSaida,   backgroundColor: '#EF4444', borderRadius: 6, barPercentage: 0.5 }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#1E293B',
-                            titleColor: '#F8FAFC',
-                            bodyColor: '#F8FAFC',
-                            padding: 10,
-                            callbacks: {
-                                label: function(context) {
-                                    return ' R$ ' + context.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-                                }
-                            }
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false },
+                        tooltip: { backgroundColor: '#1E293B', titleColor: '#F8FAFC', bodyColor: '#F8FAFC', padding: 10,
+                            callbacks: { label: ctx => ' R$ ' + ctx.parsed.y.toLocaleString('pt-BR', {minimumFractionDigits:2}) }
                         }
                     },
                     scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { font: { family: 'Poppins', size: 12 }, color: '#94A3B8' }
-                        },
-                        y: {
-                            grid: { color: 'rgba(255, 255, 255, 0.07)' },
-                            ticks: {
-                                font: { family: 'Poppins', size: 11 },
-                                color: '#64748B',
-                                callback: function(value) {
-                                    return 'R$ ' + (value >= 1000 ? (value / 1000).toFixed(1) + 'k' : value);
-                                }
-                            }
-                        }
+                        x: { grid: { display: false }, ticks: { color: '#94A3B8', font: { family: 'Poppins', size: 12 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.07)' }, ticks: { color: '#64748B', callback: v => 'R$ '+(v>=1000?(v/1000).toFixed(1)+'k':v) } }
                     }
                 }
             });
         }
 
-        function atualizarSelectCategorias() {
-            const select = document.getElementById('selectCategoria');
-            select.innerHTML = '<option value="">Sem categoria</option>' +
-                listaCategorias.map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
-        }
+        function abrirModal() { document.getElementById('modalNova').style.display = 'flex'; }
+        function fecharModal() { document.getElementById('modalNova').style.display = 'none'; }
 
-        function abrirModalNovaTransacao() {
-            document.getElementById('modalNovaTransacao').style.display = 'flex';
-        }
-
-        function fecharModalNovaTransacao() {
-            document.getElementById('modalNovaTransacao').style.display = 'none';
-        }
-
-        async function salvarNovaTransacao(event) {
+        async function salvar(event) {
             event.preventDefault();
-            const btn = document.getElementById('btnSalvarGasto');
+            const btn = document.getElementById('btnSalvar');
             btn.disabled = true;
-
             const categoriaId = document.getElementById('selectCategoria').value;
             const payload = {
                 descricao: document.getElementById('inputDescricao').value.trim(),
                 valor: parseFloat(document.getElementById('inputValor').value),
+                tipo: document.getElementById('inputTipo').value,
                 categoria_id: categoriaId ? Number(categoriaId) : null,
                 formaPagamento: document.getElementById('selectFormaPagamento').value,
                 data: document.getElementById('inputData').value
             };
-
             try {
-                await API.criarGasto(payload);
-                fecharModalNovaTransacao();
+                await API.criarMovimentacao(payload);
+                fecharModal();
                 document.getElementById('inputDescricao').value = '';
                 document.getElementById('inputValor').value = '';
-                await carregarDadosDashboard();
-            } catch (error) {
-                alert('Erro ao salvar gasto: ' + error.message);
-            } finally {
-                btn.disabled = false;
-            }
+                await carregarDados();
+            } catch (e) {
+                alert('Erro ao salvar: ' + e.message);
+            } finally { btn.disabled = false; }
         }
 
-        // Carrega ao inicializar a página
-        carregarDadosDashboard();
+        carregarDados();
     </script>
 </body>
 </html>

@@ -108,31 +108,31 @@ const API = {
         return data;
     },
 
-    // Gastos / Transações
-    async getGastos() {
-        return await authFetch('/gastos');
+    // Movimentações (substituiu Gastos)
+    async getMovimentacoes() {
+        return await authFetch('/movimentacoes');
     },
 
-    async getGastoPorId(id) {
-        return await authFetch(`/gastos/${id}`);
+    async getMovimentacaoPorId(id) {
+        return await authFetch(`/movimentacoes/${id}`);
     },
 
-    async criarGasto(gasto) {
-        return await authFetch('/gastos', {
+    async criarMovimentacao(movimentacao) {
+        return await authFetch('/movimentacoes', {
             method: 'POST',
-            body: JSON.stringify(gasto)
+            body: JSON.stringify(movimentacao)
         });
     },
 
-    async editarGasto(id, gasto) {
-        return await authFetch(`/gastos/${id}`, {
+    async editarMovimentacao(id, movimentacao) {
+        return await authFetch(`/movimentacoes/${id}`, {
             method: 'PUT',
-            body: JSON.stringify(gasto)
+            body: JSON.stringify(movimentacao)
         });
     },
 
-    async excluirGasto(id) {
-        return await authFetch(`/gastos/${id}`, {
+    async excluirMovimentacao(id) {
+        return await authFetch(`/movimentacoes/${id}`, {
             method: 'DELETE'
         });
     },

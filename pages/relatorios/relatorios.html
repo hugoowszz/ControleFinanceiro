@@ -8,87 +8,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
-
-    <title>Planejamento e Relatórios - Porkito</title>
+    <title>Relatórios - Porkito</title>
     <style>
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            z-index: 1000; align-items: center; justify-content: center; padding: 20px;
         }
-        .modal-card {
-            background: #1E293B;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #F8FAFC;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-        }
-        .modal-header h3 { font-size: 18px; color: #10B981; }
-        .modal-close {
-            background: none; border: none; color: #94A3B8;
-            font-size: 20px; cursor: pointer;
-        }
-        .modal-form label { display: block; font-size: 13px; color: #94A3B8; margin-bottom: 6px; }
-        .modal-form input {
-            width: 100%;
-            padding: 11px 14px;
-            background: #0F172A;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #F8FAFC;
-            font-size: 14px;
-            outline: none;
-            margin-bottom: 16px;
-        }
-        .modal-form input:focus { border-color: #10B981; }
-        .modal-btn-salvar {
-            width: 100%;
-            padding: 12px;
-            background: #10B981;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .item-categoria-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .btn-excluir-cat {
-            background: none;
-            border: none;
-            color: #64748B;
-            cursor: pointer;
-            padding: 4px;
-            font-size: 13px;
-        }
-        .btn-excluir-cat:hover { color: #EF4444; }
-        .empty-state {
-            text-align: center;
-            padding: 20px 10px;
-            color: #64748B;
-            font-size: 13px;
-        }
+        .modal-card { background:#1E293B; width:100%; max-width:400px; border-radius:20px; padding:24px; box-shadow:0 20px 40px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); color:#F8FAFC; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+        .modal-header h3 { font-size:18px; color:#10B981; }
+        .modal-close { background:none; border:none; color:#94A3B8; font-size:20px; cursor:pointer; }
+        .modal-form label { display:block; font-size:13px; color:#94A3B8; margin-bottom:6px; }
+        .modal-form input { width:100%; padding:11px 14px; background:#0F172A; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#F8FAFC; font-size:14px; outline:none; margin-bottom:16px; }
+        .modal-form input:focus { border-color:#10B981; }
+        .modal-btn-salvar { width:100%; padding:12px; background:#10B981; color:white; border:none; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; }
+        .item-categoria-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+        .btn-excluir-cat { background:none; border:none; color:#64748B; cursor:pointer; padding:4px; font-size:13px; }
+        .btn-excluir-cat:hover { color:#EF4444; }
+        .empty-state { text-align:center; padding:20px 10px; color:#64748B; font-size:13px; }
+        .resumo-financeiro { display:flex; gap:10px; margin-bottom:16px; }
+        .resumo-card { flex:1; background:#1E293B; border-radius:12px; padding:12px 14px; border:1px solid rgba(255,255,255,0.07); }
+        .resumo-card .label-r { font-size:11px; color:#64748B; margin-bottom:2px; }
+        .resumo-card .valor-r { font-size:16px; font-weight:700; }
+        .verde { color:#10B981; }
+        .vermelho { color:#EF4444; }
+        .azul { color:#60A5FA; }
     </style>
 </head>
 <body>
@@ -101,191 +46,159 @@
     </header>
 
     <main>
-        <div class="titulo-secao">
-            <h1>Relatórios e Categorias</h1>
+        <div class="titulo-secao"><h1>Relatórios e Categorias</h1></div>
+
+        <!-- RESUMO GERAL -->
+        <div class="resumo-financeiro">
+            <div class="resumo-card">
+                <div class="label-r">⬆️ Entradas</div>
+                <div class="valor-r verde" id="resumoEntradas">R$ 0,00</div>
+            </div>
+            <div class="resumo-card">
+                <div class="label-r">⬇️ Saídas</div>
+                <div class="valor-r vermelho" id="resumoSaidas">R$ 0,00</div>
+            </div>
+            <div class="resumo-card">
+                <div class="label-r">💰 Saldo</div>
+                <div class="valor-r azul" id="resumoSaldo">R$ 0,00</div>
+            </div>
         </div>
 
-        <!-- CARD 1: MINHAS CATEGORIAS -->
+        <!-- CATEGORIAS -->
         <div class="card-planejamento">
             <div class="card-header">
                 <div class="header-titulo">
                     <i class="fa-solid fa-tags icone-verde"></i>
                     <h2>Minhas Categorias</h2>
                 </div>
-                <button class="btn-nova-meta" onclick="abrirModalNovaCategoria()">+ Nova Categoria</button>
+                <button class="btn-nova-meta" onclick="abrirModal()">+ Nova Categoria</button>
             </div>
-
-            <div class="lista-itens" id="listaMinhasCategorias">
+            <div class="lista-itens" id="listaCategorias">
                 <div class="empty-state">Carregando categorias...</div>
             </div>
         </div>
 
-        <!-- CARD 2: GASTOS POR CATEGORIA -->
+        <!-- GASTOS POR CATEGORIA (SAÍDAS APENAS) -->
         <div class="card-planejamento">
             <div class="card-header">
                 <div class="header-titulo">
                     <i class="fa-solid fa-chart-pie icone-verde"></i>
-                    <h2>Gastos por Categoria</h2>
+                    <h2>Saídas por Categoria</h2>
                 </div>
-                <span class="data-subtitulo" id="totalGastoRelatorio">R$ 0,00</span>
+                <span class="data-subtitulo" id="totalSaidasRelatorio">R$ 0,00</span>
             </div>
-
-            <div class="lista-itens" id="listaGastosPorCategoria">
+            <div class="lista-itens" id="listaRelatorio">
                 <div class="empty-state">Carregando relatório...</div>
             </div>
         </div>
     </main>
 
-    <!-- BARRA DE NAVEGAÇÃO -->
     <div class="barra-navegacao">
-        <div onclick="window.location.href='../../index.html'">
-            <i class="fa-solid fa-building-columns"></i>
-            <span>Dashboard</span>
-        </div>
-        <div onclick="window.location.href='../transacoes/transacoes.html'">
-            <i class="fa-solid fa-receipt"></i>
-            <span>Transações</span>
-        </div>
-        <div class="active" onclick="window.location.href='./relatorios.html'">
-            <i class="fa-solid fa-piggy-bank"></i>
-            <span>Relatórios</span>
-        </div>
-        <div onclick="window.location.href='../configuracoes/configuracoes.html'">
-            <i class="fa-solid fa-user-gear"></i>
-            <span>Configurações</span>
-        </div>
+        <div onclick="window.location.href='../../index.html'"><i class="fa-solid fa-building-columns"></i><span>Dashboard</span></div>
+        <div onclick="window.location.href='../transacoes/transacoes.html'"><i class="fa-solid fa-receipt"></i><span>Transações</span></div>
+        <div class="active"><i class="fa-solid fa-piggy-bank"></i><span>Relatórios</span></div>
+        <div onclick="window.location.href='../configuracoes/configuracoes.html'"><i class="fa-solid fa-user-gear"></i><span>Configurações</span></div>
     </div>
 
-    <!-- MODAL NOVA CATEGORIA -->
-    <div class="modal-overlay" id="modalNovaCategoria">
+    <!-- MODAL CATEGORIA -->
+    <div class="modal-overlay" id="modalCat">
         <div class="modal-card">
             <div class="modal-header">
                 <h3>Nova Categoria</h3>
-                <button class="modal-close" onclick="fecharModalNovaCategoria()">&times;</button>
+                <button class="modal-close" onclick="fecharModal()">&times;</button>
             </div>
-            <form class="modal-form" onsubmit="salvarNovaCategoria(event)">
-                <label for="inputNomeCategoria">Nome da Categoria</label>
-                <input type="text" id="inputNomeCategoria" placeholder="Ex: Alimentação, Lazer, Saúde" required>
-                <button type="submit" class="modal-btn-salvar" id="btnSalvarCat">Criar Categoria</button>
+            <form class="modal-form" onsubmit="salvarCategoria(event)">
+                <label for="inputNome">Nome da Categoria</label>
+                <input type="text" id="inputNome" placeholder="Ex: Alimentação, Lazer, Salário" required>
+                <button type="submit" class="modal-btn-salvar" id="btnSalvar">Criar Categoria</button>
             </form>
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script src="../../api.js"></script>
     <script>
         verificarAutenticacao();
 
         async function carregarRelatorios() {
             try {
-                const [categorias, gastos] = await Promise.all([
-                    API.getCategorias(),
-                    API.getGastos()
-                ]);
+                const [cats, movs] = await Promise.all([API.getCategorias(), API.getMovimentacoes()]);
 
-                renderizarListaCategorias(categorias || []);
-                renderizarGastosPorCategoria(categorias || [], gastos || []);
-            } catch (error) {
-                console.error('Erro ao carregar relatórios:', error);
-            }
+                // Resumo geral
+                const entradas = (movs||[]).filter(m => m.tipo === 'ENTRADA').reduce((s,m) => s+m.valor, 0);
+                const saidas   = (movs||[]).filter(m => m.tipo === 'SAIDA').reduce((s,m) => s+m.valor, 0);
+                const saldo    = entradas - saidas;
+                document.getElementById('resumoEntradas').innerText = formatarMoeda(entradas);
+                document.getElementById('resumoSaidas').innerText   = formatarMoeda(saidas);
+                const elSaldo = document.getElementById('resumoSaldo');
+                elSaldo.innerText   = formatarMoeda(saldo);
+                elSaldo.className   = 'valor-r ' + (saldo >= 0 ? 'verde' : 'vermelho');
+
+                renderizarCategorias(cats||[]);
+                renderizarRelatorio(cats||[], (movs||[]).filter(m => m.tipo === 'SAIDA'), saidas);
+            } catch(e) { console.error(e); }
         }
 
-        function renderizarListaCategorias(categorias) {
-            const container = document.getElementById('listaMinhasCategorias');
-            if (categorias.length === 0) {
-                container.innerHTML = `<div class="empty-state">Nenhuma categoria cadastrada. Clique em "+ Nova Categoria" acima.</div>`;
-                return;
-            }
-
-            container.innerHTML = categorias.map(c => `
+        function renderizarCategorias(cats) {
+            const c = document.getElementById('listaCategorias');
+            if (!cats.length) { c.innerHTML = `<div class="empty-state">Nenhuma categoria. Clique em "+ Nova Categoria".</div>`; return; }
+            c.innerHTML = cats.map(cat => `
                 <div class="item-categoria-row">
-                    <span style="font-size: 14px; font-weight: 500;">${c.nome}</span>
-                    <button class="btn-excluir-cat" onclick="excluirCategoria(${c.id})" title="Excluir categoria">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>
-            `).join('');
+                    <span style="font-size:14px;font-weight:500;">${cat.nome}</span>
+                    <button class="btn-excluir-cat" onclick="excluirCategoria(${cat.id})"><i class="fa-solid fa-trash-can"></i></button>
+                </div>`).join('');
         }
 
-        function renderizarGastosPorCategoria(categorias, gastos) {
-            const container = document.getElementById('listaGastosPorCategoria');
-            const total = (gastos || []).reduce((acc, g) => acc + (Number(g.valor) || 0), 0);
-            document.getElementById('totalGastoRelatorio').innerText = `Total: ${formatarMoeda(total)}`;
+        function renderizarRelatorio(cats, saidas, totalSaidas) {
+            const c = document.getElementById('listaRelatorio');
+            document.getElementById('totalSaidasRelatorio').innerText = `Total: ${formatarMoeda(totalSaidas)}`;
+            if (!saidas.length) { c.innerHTML = `<div class="empty-state">Nenhuma saída registrada.</div>`; return; }
 
-            if (gastos.length === 0) {
-                container.innerHTML = `<div class="empty-state">Nenhum gasto registrado para gerar relatórios.</div>`;
-                return;
-            }
+            const mapaNomes = { 'sem_categoria': 'Sem Categoria' };
+            cats.forEach(cat => { mapaNomes[cat.id] = cat.nome; });
 
-            // Agrupa gastos por categoria_id
-            const totaisPorCat = {};
-            gastos.forEach(g => {
-                const catId = g.categoria_id || 'sem_categoria';
-                totaisPorCat[catId] = (totaisPorCat[catId] || 0) + (Number(g.valor) || 0);
+            const totais = {};
+            saidas.forEach(m => {
+                const k = m.categoria_id || 'sem_categoria';
+                totais[k] = (totais[k] || 0) + m.valor;
             });
 
-            // Mapeia nomes
-            const mapaNomes = { 'sem_categoria': 'Sem Categoria' };
-            categorias.forEach(c => { mapaNomes[c.id] = c.nome; });
-
-            let html = '';
-            for (const [catId, valorCat] of Object.entries(totaisPorCat)) {
-                const porcentagem = total > 0 ? Math.round((valorCat / total) * 100) : 0;
-                const nomeCat = mapaNomes[catId] || 'Outros';
-
-                html += `
+            c.innerHTML = Object.entries(totais).map(([k, v]) => {
+                const pct = totalSaidas > 0 ? Math.round((v/totalSaidas)*100) : 0;
+                return `
                     <div class="item-meta">
                         <div class="meta-info">
-                            <span class="meta-nome">${nomeCat}</span>
+                            <span class="meta-nome">${mapaNomes[k] || 'Outros'}</span>
                             <div class="meta-valores">
-                                <span class="meta-progresso-txt">${formatarMoeda(valorCat)}</span>
-                                <span class="meta-porcentagem" style="margin-left: 8px; color: #10B981;">${porcentagem}%</span>
+                                <span class="meta-progresso-txt">${formatarMoeda(v)}</span>
+                                <span style="margin-left:8px;color:#10B981;">${pct}%</span>
                             </div>
                         </div>
                         <div class="barra-progresso-fundo">
-                            <div class="barra-progresso-preenchimento verde" style="width: ${porcentagem}%;"></div>
+                            <div class="barra-progresso-preenchimento verde" style="width:${pct}%;"></div>
                         </div>
-                    </div>
-                `;
-            }
-
-            container.innerHTML = html;
+                    </div>`;
+            }).join('');
         }
 
-        function abrirModalNovaCategoria() {
-            document.getElementById('modalNovaCategoria').style.display = 'flex';
-        }
+        function abrirModal() { document.getElementById('modalCat').style.display = 'flex'; }
+        function fecharModal() { document.getElementById('modalCat').style.display = 'none'; }
 
-        function fecharModalNovaCategoria() {
-            document.getElementById('modalNovaCategoria').style.display = 'none';
-        }
-
-        async function salvarNovaCategoria(event) {
+        async function salvarCategoria(event) {
             event.preventDefault();
-            const btn = document.getElementById('btnSalvarCat');
-            btn.disabled = true;
-
-            const nome = document.getElementById('inputNomeCategoria').value.trim();
+            const btn = document.getElementById('btnSalvar'); btn.disabled = true;
             try {
-                await API.criarCategoria(nome);
-                fecharModalNovaCategoria();
-                document.getElementById('inputNomeCategoria').value = '';
+                await API.criarCategoria(document.getElementById('inputNome').value.trim());
+                fecharModal();
+                document.getElementById('inputNome').value = '';
                 await carregarRelatorios();
-            } catch (error) {
-                alert('Erro ao criar categoria: ' + error.message);
-            } finally {
-                btn.disabled = false;
-            }
+            } catch(e) { alert('Erro: ' + e.message); }
+            finally { btn.disabled = false; }
         }
 
         async function excluirCategoria(id) {
-            if (!confirm('Deseja excluir esta categoria?')) return;
-            try {
-                await API.excluirCategoria(id);
-                await carregarRelatorios();
-            } catch (error) {
-                alert('Erro ao excluir: ' + error.message);
-            }
+            if (!confirm('Excluir esta categoria?')) return;
+            try { await API.excluirCategoria(id); await carregarRelatorios(); }
+            catch(e) { alert('Erro: ' + e.message); }
         }
 
         carregarRelatorios();

@@ -8,101 +8,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
-
-    <title>Histórico de Transações - Porkito</title>
+    <title>Histórico de Movimentações - Porkito</title>
     <style>
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            z-index: 1000; align-items: center; justify-content: center; padding: 20px;
         }
-        .modal-card {
-            background: #1E293B;
-            width: 100%;
-            max-width: 440px;
-            border-radius: 20px;
-            padding: 26px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #F8FAFC;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .modal-header h3 { font-size: 20px; color: #10B981; }
-        .modal-close {
-            background: none; border: none; color: #94A3B8;
-            font-size: 20px; cursor: pointer;
-        }
-        .modal-form .form-group { margin-bottom: 14px; }
-        .modal-form label { display: block; font-size: 13px; color: #94A3B8; margin-bottom: 6px; }
-        .modal-form input, .modal-form select {
-            width: 100%;
-            padding: 11px 14px;
-            background: #0F172A;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #F8FAFC;
-            font-size: 14px;
-            outline: none;
-        }
-        .modal-form input:focus, .modal-form select:focus { border-color: #10B981; }
-        .modal-btn-salvar {
-            width: 100%;
-            padding: 13px;
-            background: #10B981;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .modal-btn-salvar:hover { background: #059669; }
-        .btn-excluir-item {
-            background: none;
-            border: none;
-            color: #64748B;
-            cursor: pointer;
-            padding: 6px;
-            margin-left: 8px;
-            transition: color 0.2s;
-        }
-        .btn-excluir-item:hover { color: #EF4444; }
-        .item-direita {
-            display: flex;
-            align-items: center;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px 10px;
-            color: #64748B;
-            font-size: 14px;
-        }
-        .btn-adicionar-topo {
-            background: #10B981;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 16px;
-        }
+        .modal-card { background:#1E293B; width:100%; max-width:440px; border-radius:20px; padding:26px; box-shadow:0 20px 40px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); color:#F8FAFC; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+        .modal-header h3 { font-size:20px; color:#10B981; }
+        .modal-close { background:none; border:none; color:#94A3B8; font-size:20px; cursor:pointer; }
+        .modal-form .form-group { margin-bottom:14px; }
+        .modal-form label { display:block; font-size:13px; color:#94A3B8; margin-bottom:6px; }
+        .modal-form input, .modal-form select { width:100%; padding:11px 14px; background:#0F172A; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#F8FAFC; font-size:14px; outline:none; }
+        .modal-form input:focus, .modal-form select:focus { border-color:#10B981; }
+        .modal-btn-salvar { width:100%; padding:13px; background:#10B981; color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; margin-top:10px; }
+        .modal-btn-salvar:hover { background:#059669; }
+        .btn-excluir-item { background:none; border:none; color:#64748B; cursor:pointer; padding:6px; margin-left:8px; }
+        .btn-excluir-item:hover { color:#EF4444; }
+        .item-direita { display:flex; align-items:center; }
+        .empty-state { text-align:center; padding:40px 10px; color:#64748B; font-size:14px; }
+        .btn-adicionar-topo { background:#10B981; color:white; border:none; padding:10px 18px; border-radius:12px; font-size:13px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; }
+        .badge-entrada { background:rgba(16,185,129,0.15); color:#10B981; }
+        .badge-saida   { background:rgba(239,68,68,0.15);  color:#EF4444; }
+        .valor.positivo { color:#10B981; font-weight:600; }
+        .valor.negativo { color:#EF4444; font-weight:600; }
+        .tag-tipo { font-size:10px; padding:2px 8px; border-radius:20px; font-weight:600; margin-left:6px; }
+        .tag-entrada { background:rgba(16,185,129,0.2); color:#10B981; }
+        .tag-saida   { background:rgba(239,68,68,0.2);  color:#EF4444; }
     </style>
 </head>
 <body>
@@ -111,79 +45,64 @@
             <img src="../../src/icon.png" alt="Porkito Icon" class="icon-header">
             <h2>Porkito</h2>
         </div>
-        <button class="btn-adicionar-topo" onclick="abrirModalNovaTransacao()">
-            <i class="fa-solid fa-plus"></i> Novo Gasto
+        <button class="btn-adicionar-topo" onclick="abrirModal()">
+            <i class="fa-solid fa-plus"></i> Nova
         </button>
     </header>
 
     <main>
-        <!-- BARRA DE BUSCA -->
         <div class="busca-container">
             <i class="fa-solid fa-magnifying-glass busca-icon"></i>
-            <input type="text" id="inputBusca" placeholder="Buscar gastos..." class="busca-input" oninput="filtrarTransacoes()">
+            <input type="text" id="inputBusca" placeholder="Buscar movimentações..." class="busca-input" oninput="filtrar()">
         </div>
 
-        <!-- FILTROS -->
         <div class="filtros">
-            <button class="filtro-btn active" onclick="setFiltroForma('todas', this)">Todas</button>
-            <button class="filtro-btn" onclick="setFiltroForma('PIX', this)">PIX</button>
-            <button class="filtro-btn" onclick="setFiltroForma('Cartão de Crédito', this)">Crédito</button>
-            <button class="filtro-btn" onclick="setFiltroForma('Dinheiro', this)">Dinheiro</button>
+            <button class="filtro-btn active" onclick="setFiltroTipo('todas', this)">Todas</button>
+            <button class="filtro-btn" onclick="setFiltroTipo('ENTRADA', this)">⬆️ Entradas</button>
+            <button class="filtro-btn" onclick="setFiltroTipo('SAIDA', this)">⬇️ Saídas</button>
         </div>
 
-        <!-- CONTAINER DAS TRANSAÇÕES AGRUPADAS POR DATA -->
-        <div id="containerSecoesTransacoes">
-            <div class="empty-state">
-                <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 8px;"></i>
-                <p>Carregando gastos...</p>
-            </div>
+        <div id="containerMovimentacoes">
+            <div class="empty-state"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;margin-bottom:8px;"></i><p>Carregando...</p></div>
         </div>
     </main>
 
-    <!-- BARRA DE NAVEGAÇÃO -->
     <div class="barra-navegacao">
-        <div onclick="window.location.href='../../index.html'">
-            <i class="fa-solid fa-building-columns"></i>
-            <span>Dashboard</span>
-        </div>
-        <div class="active" onclick="window.location.href='./transacoes.html'">
-            <i class="fa-solid fa-receipt"></i>
-            <span>Transações</span>
-        </div>
-        <div onclick="window.location.href='../relatorios/relatorios.html'">
-            <i class="fa-solid fa-piggy-bank"></i>
-            <span>Relatórios</span>
-        </div>
-        <div onclick="window.location.href='../configuracoes/configuracoes.html'">
-            <i class="fa-solid fa-user-gear"></i>
-            <span>Configurações</span>
-        </div>
+        <div onclick="window.location.href='../../index.html'"><i class="fa-solid fa-building-columns"></i><span>Dashboard</span></div>
+        <div class="active"><i class="fa-solid fa-receipt"></i><span>Transações</span></div>
+        <div onclick="window.location.href='../relatorios/relatorios.html'"><i class="fa-solid fa-piggy-bank"></i><span>Relatórios</span></div>
+        <div onclick="window.location.href='../configuracoes/configuracoes.html'"><i class="fa-solid fa-user-gear"></i><span>Configurações</span></div>
     </div>
 
-    <!-- MODAL NOVA TRANSAÇÃO -->
-    <div class="modal-overlay" id="modalNovaTransacao">
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalNova">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>Novo Gasto</h3>
-                <button class="modal-close" onclick="fecharModalNovaTransacao()">&times;</button>
+                <h3>Nova Movimentação</h3>
+                <button class="modal-close" onclick="fecharModal()">&times;</button>
             </div>
-            <form class="modal-form" onsubmit="salvarNovaTransacao(event)">
+            <form class="modal-form" onsubmit="salvar(event)">
                 <div class="form-group">
-                    <label for="inputDescricao">Descrição</label>
-                    <input type="text" id="inputDescricao" placeholder="Ex: Mercado, Padaria" required>
-                </div>
-                <div class="form-group">
-                    <label for="inputValor">Valor (R$)</label>
-                    <input type="number" step="0.01" id="inputValor" placeholder="0,00" required>
-                </div>
-                <div class="form-group">
-                    <label for="selectCategoria">Categoria</label>
-                    <select id="selectCategoria">
-                        <option value="">Sem categoria</option>
+                    <label>Tipo</label>
+                    <select id="inputTipo">
+                        <option value="SAIDA">⬇️ Saída (Gasto)</option>
+                        <option value="ENTRADA">⬆️ Entrada (Receita)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="selectFormaPagamento">Forma de Pagamento</label>
+                    <label>Descrição</label>
+                    <input type="text" id="inputDescricao" placeholder="Ex: Salário, Padaria" required>
+                </div>
+                <div class="form-group">
+                    <label>Valor (R$)</label>
+                    <input type="number" step="0.01" id="inputValor" placeholder="0,00" required>
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="selectCategoria"><option value="">Sem categoria</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Forma de Pagamento</label>
                     <select id="selectFormaPagamento">
                         <option value="PIX">PIX</option>
                         <option value="Cartão de Crédito">Cartão de Crédito</option>
@@ -194,208 +113,136 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="inputData">Data</label>
+                    <label>Data</label>
                     <input type="date" id="inputData" required>
                 </div>
-                <button type="submit" class="modal-btn-salvar" id="btnSalvar">Registrar Gasto</button>
+                <button type="submit" class="modal-btn-salvar" id="btnSalvar">Registrar</button>
             </form>
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script src="../../api.js"></script>
     <script>
         verificarAutenticacao();
-
         document.getElementById('inputData').value = new Date().toISOString().split('T')[0];
 
-        let todosGastos = [];
+        let todasMovimentacoes = [];
         let mapaCategorias = {};
-        let filtroFormaAtual = 'todas';
+        let filtroTipoAtual = 'todas';
 
-        function getIconeBadge(descricao) {
-            const desc = (descricao || '').toLowerCase();
-            if (desc.includes('mercado') || desc.includes('padaria') || desc.includes('compras')) {
-                return { classe: 'badge-carrinho', icone: 'fa-cart-shopping' };
-            }
-            if (desc.includes('uber') || desc.includes('gasolina') || desc.includes('transporte') || desc.includes('metro')) {
-                return { classe: 'badge-transporte', icone: 'fa-train' };
-            }
-            if (desc.includes('almoço') || desc.includes('jantar') || desc.includes('restaurante') || desc.includes('lanche')) {
-                return { classe: 'badge-restaurante', icone: 'fa-utensils' };
-            }
-            return { classe: 'badge-salario', icone: 'fa-money-bill-wave' };
-        }
-
-        async function carregarTransacoes() {
+        async function carregar() {
             try {
-                const [gastos, categorias] = await Promise.all([
-                    API.getGastos(),
-                    API.getCategorias()
-                ]);
-
+                const [movs, cats] = await Promise.all([API.getMovimentacoes(), API.getCategorias()]);
                 mapaCategorias = {};
-                (categorias || []).forEach(c => { mapaCategorias[c.id] = c.nome; });
-
-                const selectCat = document.getElementById('selectCategoria');
-                selectCat.innerHTML = '<option value="">Sem categoria</option>' +
-                    (categorias || []).map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
-
-                todosGastos = gastos || [];
-                filtrarTransacoes();
-
-            } catch (error) {
-                console.error('Erro ao buscar transações:', error);
-            }
+                (cats||[]).forEach(c => { mapaCategorias[c.id] = c.nome; });
+                document.getElementById('selectCategoria').innerHTML =
+                    '<option value="">Sem categoria</option>' +
+                    (cats||[]).map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+                todasMovimentacoes = movs || [];
+                filtrar();
+            } catch(e) { console.error(e); }
         }
 
-        function setFiltroForma(forma, btn) {
-            filtroFormaAtual = forma;
+        function setFiltroTipo(tipo, btn) {
+            filtroTipoAtual = tipo;
             document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            filtrarTransacoes();
+            filtrar();
         }
 
-        function filtrarTransacoes() {
+        function filtrar() {
             const termo = document.getElementById('inputBusca').value.toLowerCase().trim();
-            
-            let filtrados = todosGastos.filter(g => {
-                const bateTexto = !termo || (g.descricao && g.descricao.toLowerCase().includes(termo));
-                const bateForma = filtroFormaAtual === 'todas' || g.formaPagamento === filtroFormaAtual;
-                return bateTexto && bateForma;
+            const filtradas = todasMovimentacoes.filter(m => {
+                const bateTexto = !termo || (m.descricao && m.descricao.toLowerCase().includes(termo));
+                const bateTipo  = filtroTipoAtual === 'todas' || m.tipo === filtroTipoAtual;
+                return bateTexto && bateTipo;
             });
-
-            renderizarGruposTransacoes(filtrados);
+            renderizar(filtradas);
         }
 
-        function formatarTituloGrupo(dataStr) {
-            if (!dataStr) return 'Sem data';
-            const hoje = new Date().toISOString().split('T')[0];
-            const ontemObj = new Date();
-            ontemObj.setDate(ontemObj.getDate() - 1);
-            const ontem = ontemObj.toISOString().split('T')[0];
-
-            if (dataStr === hoje) return 'Hoje, ' + formatarData(dataStr);
-            if (dataStr === ontem) return 'Ontem, ' + formatarData(dataStr);
-            return formatarData(dataStr);
-        }
-
-        function renderizarGruposTransacoes(gastos) {
-            const container = document.getElementById('containerSecoesTransacoes');
-
-            if (!gastos || gastos.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fa-solid fa-receipt" style="font-size: 32px; margin-bottom: 10px; color: #475569;"></i>
-                        <p>Nenhum gasto encontrado.</p>
-                    </div>
-                `;
+        function renderizar(lista) {
+            const container = document.getElementById('containerMovimentacoes');
+            if (!lista.length) {
+                container.innerHTML = `<div class="empty-state"><i class="fa-solid fa-receipt" style="font-size:32px;color:#475569;"></i><p>Nenhuma movimentação encontrada.</p></div>`;
                 return;
             }
-
-            // Agrupa por data decrescente
             const grupos = {};
-            gastos.sort((a, b) => new Date(b.data || 0) - new Date(a.data || 0));
-
-            gastos.forEach(g => {
-                const chaveData = g.data || 'Sem data';
-                if (!grupos[chaveData]) grupos[chaveData] = [];
-                grupos[chaveData].push(g);
+            [...lista].sort((a,b) => new Date(b.data||0) - new Date(a.data||0)).forEach(m => {
+                const k = m.data || 'Sem data';
+                if (!grupos[k]) grupos[k] = [];
+                grupos[k].push(m);
             });
-
+            const hoje = new Date().toISOString().split('T')[0];
+            const ontemObj = new Date(); ontemObj.setDate(ontemObj.getDate()-1);
+            const ontem = ontemObj.toISOString().split('T')[0];
             let html = '';
-            for (const [dataStr, lista] of Object.entries(grupos)) {
-                html += `
-                    <div class="secao-transacoes">
-                        <h3 class="data-grupo">${formatarTituloGrupo(dataStr)}</h3>
-                        <div class="card-transacoes">
-                `;
-
-                lista.forEach((g, index) => {
-                    const badge = getIconeBadge(g.descricao);
-                    const nomeCategoria = g.categoria_id && mapaCategorias[g.categoria_id] ? ` • ${mapaCategorias[g.categoria_id]}` : '';
-
-                    if (index > 0) {
-                        html += `<div class="divisor"></div>`;
-                    }
-
+            for (const [dataStr, grp] of Object.entries(grupos)) {
+                let titulo = formatarData(dataStr);
+                if (dataStr === hoje) titulo = 'Hoje, ' + titulo;
+                else if (dataStr === ontem) titulo = 'Ontem, ' + titulo;
+                html += `<div class="secao-transacoes"><h3 class="data-grupo">${titulo}</h3><div class="card-transacoes">`;
+                grp.forEach((m, i) => {
+                    const entrada = m.tipo === 'ENTRADA';
+                    const nomeCat = m.categoria_id && mapaCategorias[m.categoria_id] ? ` • ${mapaCategorias[m.categoria_id]}` : '';
+                    if (i > 0) html += `<div class="divisor"></div>`;
                     html += `
                         <div class="item-transacao">
                             <div class="info-esquerda">
-                                <div class="icone-badge ${badge.classe}">
-                                    <i class="fa-solid ${badge.icone}"></i>
+                                <div class="icone-badge ${entrada ? 'badge-entrada' : 'badge-saida'}">
+                                    <i class="fa-solid ${entrada ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
                                 </div>
                                 <div class="detalhes">
-                                    <h4>${g.descricao || 'Sem descrição'}</h4>
-                                    <span>${g.formaPagamento || 'Dinheiro'}${nomeCategoria}</span>
+                                    <h4>${m.descricao || 'Sem descrição'} <span class="tag-tipo ${entrada ? 'tag-entrada' : 'tag-saida'}">${entrada ? 'ENTRADA' : 'SAÍDA'}</span></h4>
+                                    <span>${m.formaPagamento || 'Dinheiro'}${nomeCat}</span>
                                 </div>
                             </div>
                             <div class="item-direita">
-                                <span class="valor negativo">-${formatarMoeda(g.valor)}</span>
-                                <button class="btn-excluir-item" onclick="excluirGasto(${g.id})" title="Excluir gasto">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
+                                <span class="valor ${entrada ? 'positivo' : 'negativo'}">${entrada ? '+' : '-'}${formatarMoeda(m.valor)}</span>
+                                <button class="btn-excluir-item" onclick="excluir(${m.id})"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
-
-                html += `
-                        </div>
-                    </div>
-                `;
+                html += `</div></div>`;
             }
-
             container.innerHTML = html;
         }
 
-        async function excluirGasto(id) {
-            if (!confirm('Tem certeza que deseja excluir este gasto?')) return;
+        async function excluir(id) {
+            if (!confirm('Excluir esta movimentação?')) return;
             try {
-                await API.excluirGasto(id);
-                todosGastos = todosGastos.filter(g => g.id !== id);
-                filtrarTransacoes();
-            } catch (error) {
-                alert('Erro ao excluir: ' + error.message);
-            }
+                await API.excluirMovimentacao(id);
+                todasMovimentacoes = todasMovimentacoes.filter(m => m.id !== id);
+                filtrar();
+            } catch(e) { alert('Erro ao excluir: ' + e.message); }
         }
 
-        function abrirModalNovaTransacao() {
-            document.getElementById('modalNovaTransacao').style.display = 'flex';
-        }
+        function abrirModal() { document.getElementById('modalNova').style.display = 'flex'; }
+        function fecharModal() { document.getElementById('modalNova').style.display = 'none'; }
 
-        function fecharModalNovaTransacao() {
-            document.getElementById('modalNovaTransacao').style.display = 'none';
-        }
-
-        async function salvarNovaTransacao(event) {
+        async function salvar(event) {
             event.preventDefault();
             const btn = document.getElementById('btnSalvar');
             btn.disabled = true;
-
             const categoriaId = document.getElementById('selectCategoria').value;
             const payload = {
                 descricao: document.getElementById('inputDescricao').value.trim(),
                 valor: parseFloat(document.getElementById('inputValor').value),
+                tipo: document.getElementById('inputTipo').value,
                 categoria_id: categoriaId ? Number(categoriaId) : null,
                 formaPagamento: document.getElementById('selectFormaPagamento').value,
                 data: document.getElementById('inputData').value
             };
-
             try {
-                await API.criarGasto(payload);
-                fecharModalNovaTransacao();
+                await API.criarMovimentacao(payload);
+                fecharModal();
                 document.getElementById('inputDescricao').value = '';
                 document.getElementById('inputValor').value = '';
-                await carregarTransacoes();
-            } catch (error) {
-                alert('Erro ao salvar gasto: ' + error.message);
-            } finally {
-                btn.disabled = false;
-            }
+                await carregar();
+            } catch(e) { alert('Erro: ' + e.message); }
+            finally { btn.disabled = false; }
         }
 
-        carregarTransacoes();
+        carregar();
     </script>
 </body>
 </html>

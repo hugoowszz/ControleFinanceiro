@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Porkito</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo-wrapper">
+                <img src="./src/icon.png" alt="Porkito">
+                <h1>Porkito</h1>
+            </div>
+            <p id="subtituloHeader">Acesse sua conta para gerenciar seus gastos</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="tab-btn active" id="tabEntrar" onclick="alternarModo('login')">Entrar</button>
+            <button class="tab-btn" id="tabCadastrar" onclick="alternarModo('cadastro')">Criar Conta</button>
+        </div>
+
+        <div id="msgFeedback" class="mensagem-feedback"></div>
+
+        <form id="authForm" onsubmit="submeterFormulario(event)">
+            <div class="form-group" id="grupoNome" style="display: none;">
+                <label for="inputNome">Nome Completo</label>
+                <div class="input-box">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="inputNome" placeholder="Seu nome">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail">E-mail</label>
+                <div class="input-box">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="inputEmail" placeholder="seu@email.com" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputSenha">Senha</label>
+                <div class="input-box">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="inputSenha" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="btnSubmit">
+                <span id="btnTexto">Entrar</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        let modoAtual = 'login';
+
+        // Redireciona para o dashboard se já estiver autenticado
+        if (getAuthToken()) {
+            window.location.href = './index.html';
+        }
+
+        function alternarModo(modo) {
+            modoAtual = modo;
+            const tabEntrar = document.getElementById('tabEntrar');
+            const tabCadastrar = document.getElementById('tabCadastrar');
+            const grupoNome = document.getElementById('grupoNome');
+            const btnTexto = document.getElementById('btnTexto');
+            const subtitulo = document.getElementById('subtituloHeader');
+            const inputNome = document.getElementById('inputNome');
+            const feedback = document.getElementById('msgFeedback');
+
+            feedback.className = 'mensagem-feedback';
+            feedback.style.display = 'none';
+
+            if (modo === 'login') {
+                tabEntrar.classList.add('active');
+                tabCadastrar.classList.remove('active');
+                grupoNome.style.display = 'none';
+                inputNome.removeAttribute('required');
+                btnTexto.innerText = 'Entrar';
+                subtitulo.innerText = 'Acesse sua conta para gerenciar seus gastos';
+            } else {
+                tabCadastrar.classList.add('active');
+                tabEntrar.classList.remove('active');
+                grupoNome.style.display = 'block';
+                inputNome.setAttribute('required', 'true');
+                btnTexto.innerText = 'Cadastrar e Entrar';
+                subtitulo.innerText = 'Crie sua conta gratuita em poucos segundos';
+            }
+        }
+
+        async function submeterFormulario(event) {
+            event.preventDefault();
+            const email = document.getElementById('inputEmail').value.trim();
+            const senha = document.getElementById('inputSenha').value.trim();
+            const nome = document.getElementById('inputNome').value.trim();
+            const feedback = document.getElementById('msgFeedback');
+            const btnSubmit = document.getElementById('btnSubmit');
+
+            feedback.className = 'mensagem-feedback';
+            feedback.style.display = 'none';
+            btnSubmit.disabled = true;
+
+            try {
+                if (modoAtual === 'cadastro') {
+                    feedback.className = 'mensagem-feedback sucesso';
+                    feedback.innerText = 'Criando conta...';
+                    feedback.style.display = 'block';
+
+                    await API.cadastrar(nome, email, senha);
+                }
+
+                feedback.className = 'mensagem-feedback sucesso';
+                feedback.innerText = 'Autenticando...';
+                feedback.style.display = 'block';
+
+                await API.login(email, senha);
+
+                feedback.innerText = 'Login realizado com sucesso! Redirecionando...';
+                setTimeout(() => {
+                    window.location.href = './index.html';
+                }, 700);
+
+            } catch (error) {
+                feedback.className = 'mensagem-feedback erro';
+                feedback.innerText = error.message || 'Erro ao processar requisição.';
+                feedback.style.display = 'block';
+                btnSubmit.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

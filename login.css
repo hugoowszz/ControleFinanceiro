@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0F172A;
+    color: #F8FAFC;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    background: #1E293B;
+    border-radius: 24px;
+    padding: 36px 28px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.logo-wrapper img {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+}
+
+.logo-wrapper h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #10B981;
+    letter-spacing: -0.5px;
+}
+
+.login-header p {
+    color: #94A3B8;
+    font-size: 14px;
+}
+
+/* Tabs de alternância */
+.auth-tabs {
+    display: flex;
+    background: #0F172A;
+    padding: 4px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: #94A3B8;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background: #10B981;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Formulário e Campos */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #CBD5E1;
+    margin-bottom: 6px;
+}
+
+.input-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-box i {
+    position: absolute;
+    left: 14px;
+    color: #64748B;
+    font-size: 15px;
+}
+
+.input-box input {
+    width: 100%;
+    background: #0F172A;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #F8FAFC;
+    padding: 12px 14px 12px 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-box input:focus {
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: #10B981;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-submit:hover {
+    background: #059669;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+/* Mensagens de Feedback */
+.mensagem-feedback {
+    display: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.mensagem-feedback.erro {
+    display: block;
+    background: rgba(239, 68, 68, 0.15);
+    color: #F87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.mensagem-feedback.sucesso {
+    display: block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34D399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}

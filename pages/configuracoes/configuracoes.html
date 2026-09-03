@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="configuracoes.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
 
     <title>Meu Perfil e Configurações - Porkito</title>
 </head>
@@ -27,11 +27,9 @@
                 <div class="avatar-img-placeholder">
                     <i class="fa-solid fa-user avatar-icon"></i>
                 </div>
-                <button class="btn-editar-avatar">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
             </div>
-            <h2 class="nome-usuario">Victor Hugo</h2>
+            <h2 class="nome-usuario" id="perfilNome">Carregando...</h2>
+            <p id="perfilEmail" style="color: #94A3B8; font-size: 13px; margin-top: 4px;">seu@email.com</p>
         </div>
 
         <!-- LISTA DE CONFIGURAÇÕES -->
@@ -56,20 +54,7 @@
                     </div>
                     <div class="opcao-info">
                         <h3>Segurança</h3>
-                        <span>Senha, 2FA e sessões ativas</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right chevron-icon"></i>
-            </div>
-
-            <div class="opcao-card">
-                <div class="opcao-esquerda">
-                    <div class="opcao-icone">
-                        <i class="fa-solid fa-bell"></i>
-                    </div>
-                    <div class="opcao-info">
-                        <h3>Notificações</h3>
-                        <span>Alertas, resumos e avisos</span>
+                        <span>Autenticação JWT ativa e protegida</span>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -77,7 +62,7 @@
         </div>
 
         <!-- BOTÃO SAIR -->
-        <button class="btn-sair">
+        <button class="btn-sair" onclick="encerrarSessao()">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
             Encerrar Sessão
         </button>
@@ -102,5 +87,17 @@
             <span>Configurações</span>
         </div>
     </div>
+
+    <!-- SCRIPTS -->
+    <script src="../../api.js"></script>
+    <script>
+        verificarAutenticacao();
+
+        const usuario = getUsuarioLogado();
+        if (usuario) {
+            document.getElementById('perfilNome').innerText = usuario.nome || 'Usuário';
+            document.getElementById('perfilEmail').innerText = usuario.email || '';
+        }
+    </script>
 </body>
 </html>

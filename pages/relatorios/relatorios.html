@@ -6,10 +6,90 @@
     <link rel="stylesheet" href="relatorios.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
 
     <title>Planejamento e Relatórios - Porkito</title>
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-card {
+            background: #1E293B;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #F8FAFC;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+        .modal-header h3 { font-size: 18px; color: #10B981; }
+        .modal-close {
+            background: none; border: none; color: #94A3B8;
+            font-size: 20px; cursor: pointer;
+        }
+        .modal-form label { display: block; font-size: 13px; color: #94A3B8; margin-bottom: 6px; }
+        .modal-form input {
+            width: 100%;
+            padding: 11px 14px;
+            background: #0F172A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #F8FAFC;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 16px;
+        }
+        .modal-form input:focus { border-color: #10B981; }
+        .modal-btn-salvar {
+            width: 100%;
+            padding: 12px;
+            background: #10B981;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .item-categoria-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .btn-excluir-cat {
+            background: none;
+            border: none;
+            color: #64748B;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 13px;
+        }
+        .btn-excluir-cat:hover { color: #EF4444; }
+        .empty-state {
+            text-align: center;
+            padding: 20px 10px;
+            color: #64748B;
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,93 +97,41 @@
             <img src="../../src/icon.png" alt="Porkito Icon" class="icon-header">
             <h2>Porkito</h2>
         </div>
-        <i class="fa-regular fa-bell bell-icon"></i>
+        <i class="fa-regular fa-bell bell-icon" onclick="carregarRelatorios()" title="Atualizar"></i>
     </header>
 
     <main>
         <div class="titulo-secao">
-            <h1>Planejamento</h1>
+            <h1>Relatórios e Categorias</h1>
         </div>
 
-        <!-- CARD 1: METAS DE ECONOMIA -->
+        <!-- CARD 1: MINHAS CATEGORIAS -->
         <div class="card-planejamento">
             <div class="card-header">
                 <div class="header-titulo">
-                    <i class="fa-solid fa-piggy-bank icone-verde"></i>
-                    <h2>Metas de Economia</h2>
+                    <i class="fa-solid fa-tags icone-verde"></i>
+                    <h2>Minhas Categorias</h2>
                 </div>
-                <button class="btn-nova-meta">+ Nova Meta</button>
+                <button class="btn-nova-meta" onclick="abrirModalNovaCategoria()">+ Nova Categoria</button>
             </div>
 
-            <div class="lista-itens">
-                <div class="item-meta">
-                    <div class="meta-info">
-                        <span class="meta-nome">Carro Novo</span>
-                        <div class="meta-valores">
-                            <span class="meta-progresso-txt">R$ 15.000 / R$ 30.000</span>
-                            <span class="meta-porcentagem">50%</span>
-                        </div>
-                    </div>
-                    <div class="barra-progresso-fundo">
-                        <div class="barra-progresso-preenchimento verde" style="width: 50%;"></div>
-                    </div>
-                </div>
-
-                <div class="item-meta">
-                    <div class="meta-info">
-                        <span class="meta-nome">Reserva de Emergência</span>
-                        <div class="meta-valores">
-                            <span class="meta-progresso-txt">R$ 8.000 / R$ 10.000</span>
-                            <span class="meta-porcentagem">80%</span>
-                        </div>
-                    </div>
-                    <div class="barra-progresso-fundo">
-                        <div class="barra-progresso-preenchimento verde" style="width: 80%;"></div>
-                    </div>
-                </div>
+            <div class="lista-itens" id="listaMinhasCategorias">
+                <div class="empty-state">Carregando categorias...</div>
             </div>
         </div>
 
-        <!-- CARD 2: ORÇAMENTO MENSAL -->
+        <!-- CARD 2: GASTOS POR CATEGORIA -->
         <div class="card-planejamento">
             <div class="card-header">
                 <div class="header-titulo">
                     <i class="fa-solid fa-chart-pie icone-verde"></i>
-                    <h2>Orçamento Mensal</h2>
+                    <h2>Gastos por Categoria</h2>
                 </div>
-                <span class="data-subtitulo">Maio 2024</span>
+                <span class="data-subtitulo" id="totalGastoRelatorio">R$ 0,00</span>
             </div>
 
-            <div class="lista-itens">
-                <div class="item-meta">
-                    <div class="meta-info">
-                        <span class="meta-nome">Moradia</span>
-                        <span class="meta-progresso-txt">R$ 1.200 / R$ 1.500</span>
-                    </div>
-                    <div class="barra-progresso-fundo">
-                        <div class="barra-progresso-preenchimento verde" style="width: 80%;"></div>
-                    </div>
-                </div>
-
-                <div class="item-meta">
-                    <div class="meta-info">
-                        <span class="meta-nome">Alimentação</span>
-                        <span class="meta-progresso-txt">R$ 450 / R$ 400</span>
-                    </div>
-                    <div class="barra-progresso-fundo">
-                        <div class="barra-progresso-preenchimento vermelho" style="width: 100%;"></div>
-                    </div>
-                </div>
-
-                <div class="item-meta">
-                    <div class="meta-info">
-                        <span class="meta-nome">Entretenimento</span>
-                        <span class="meta-progresso-txt">R$ 120 / R$ 200</span>
-                    </div>
-                    <div class="barra-progresso-fundo">
-                        <div class="barra-progresso-preenchimento verde" style="width: 60%;"></div>
-                    </div>
-                </div>
+            <div class="lista-itens" id="listaGastosPorCategoria">
+                <div class="empty-state">Carregando relatório...</div>
             </div>
         </div>
     </main>
@@ -127,5 +155,140 @@
             <span>Configurações</span>
         </div>
     </div>
+
+    <!-- MODAL NOVA CATEGORIA -->
+    <div class="modal-overlay" id="modalNovaCategoria">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Nova Categoria</h3>
+                <button class="modal-close" onclick="fecharModalNovaCategoria()">&times;</button>
+            </div>
+            <form class="modal-form" onsubmit="salvarNovaCategoria(event)">
+                <label for="inputNomeCategoria">Nome da Categoria</label>
+                <input type="text" id="inputNomeCategoria" placeholder="Ex: Alimentação, Lazer, Saúde" required>
+                <button type="submit" class="modal-btn-salvar" id="btnSalvarCat">Criar Categoria</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../../api.js"></script>
+    <script>
+        verificarAutenticacao();
+
+        async function carregarRelatorios() {
+            try {
+                const [categorias, gastos] = await Promise.all([
+                    API.getCategorias(),
+                    API.getGastos()
+                ]);
+
+                renderizarListaCategorias(categorias || []);
+                renderizarGastosPorCategoria(categorias || [], gastos || []);
+            } catch (error) {
+                console.error('Erro ao carregar relatórios:', error);
+            }
+        }
+
+        function renderizarListaCategorias(categorias) {
+            const container = document.getElementById('listaMinhasCategorias');
+            if (categorias.length === 0) {
+                container.innerHTML = `<div class="empty-state">Nenhuma categoria cadastrada. Clique em "+ Nova Categoria" acima.</div>`;
+                return;
+            }
+
+            container.innerHTML = categorias.map(c => `
+                <div class="item-categoria-row">
+                    <span style="font-size: 14px; font-weight: 500;">${c.nome}</span>
+                    <button class="btn-excluir-cat" onclick="excluirCategoria(${c.id})" title="Excluir categoria">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function renderizarGastosPorCategoria(categorias, gastos) {
+            const container = document.getElementById('listaGastosPorCategoria');
+            const total = (gastos || []).reduce((acc, g) => acc + (Number(g.valor) || 0), 0);
+            document.getElementById('totalGastoRelatorio').innerText = `Total: ${formatarMoeda(total)}`;
+
+            if (gastos.length === 0) {
+                container.innerHTML = `<div class="empty-state">Nenhum gasto registrado para gerar relatórios.</div>`;
+                return;
+            }
+
+            // Agrupa gastos por categoria_id
+            const totaisPorCat = {};
+            gastos.forEach(g => {
+                const catId = g.categoria_id || 'sem_categoria';
+                totaisPorCat[catId] = (totaisPorCat[catId] || 0) + (Number(g.valor) || 0);
+            });
+
+            // Mapeia nomes
+            const mapaNomes = { 'sem_categoria': 'Sem Categoria' };
+            categorias.forEach(c => { mapaNomes[c.id] = c.nome; });
+
+            let html = '';
+            for (const [catId, valorCat] of Object.entries(totaisPorCat)) {
+                const porcentagem = total > 0 ? Math.round((valorCat / total) * 100) : 0;
+                const nomeCat = mapaNomes[catId] || 'Outros';
+
+                html += `
+                    <div class="item-meta">
+                        <div class="meta-info">
+                            <span class="meta-nome">${nomeCat}</span>
+                            <div class="meta-valores">
+                                <span class="meta-progresso-txt">${formatarMoeda(valorCat)}</span>
+                                <span class="meta-porcentagem" style="margin-left: 8px; color: #10B981;">${porcentagem}%</span>
+                            </div>
+                        </div>
+                        <div class="barra-progresso-fundo">
+                            <div class="barra-progresso-preenchimento verde" style="width: ${porcentagem}%;"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function abrirModalNovaCategoria() {
+            document.getElementById('modalNovaCategoria').style.display = 'flex';
+        }
+
+        function fecharModalNovaCategoria() {
+            document.getElementById('modalNovaCategoria').style.display = 'none';
+        }
+
+        async function salvarNovaCategoria(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSalvarCat');
+            btn.disabled = true;
+
+            const nome = document.getElementById('inputNomeCategoria').value.trim();
+            try {
+                await API.criarCategoria(nome);
+                fecharModalNovaCategoria();
+                document.getElementById('inputNomeCategoria').value = '';
+                await carregarRelatorios();
+            } catch (error) {
+                alert('Erro ao criar categoria: ' + error.message);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function excluirCategoria(id) {
+            if (!confirm('Deseja excluir esta categoria?')) return;
+            try {
+                await API.excluirCategoria(id);
+                await carregarRelatorios();
+            } catch (error) {
+                alert('Erro ao excluir: ' + error.message);
+            }
+        }
+
+        carregarRelatorios();
+    </script>
 </body>
 </html>

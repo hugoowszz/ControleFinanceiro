@@ -6,36 +6,111 @@
     <link rel="stylesheet" href="dashboard.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <title>Dashboard - Porkito</title>
+    <style>
+        /* Estilos do Modal de Nova Transação */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-card {
+            background: #1E293B;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 20px;
+            padding: 26px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #F8FAFC;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-header h3 { font-size: 20px; color: #10B981; }
+        .modal-close {
+            background: none; border: none; color: #94A3B8;
+            font-size: 20px; cursor: pointer;
+        }
+        .modal-form .form-group {
+            margin-bottom: 14px;
+        }
+        .modal-form label {
+            display: block; font-size: 13px; color: #94A3B8; margin-bottom: 6px;
+        }
+        .modal-form input, .modal-form select {
+            width: 100%;
+            padding: 11px 14px;
+            background: #0F172A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #F8FAFC;
+            font-size: 14px;
+            outline: none;
+        }
+        .modal-form input:focus, .modal-form select:focus {
+            border-color: #10B981;
+        }
+        .modal-btn-salvar {
+            width: 100%;
+            padding: 13px;
+            background: #10B981;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .modal-btn-salvar:hover { background: #059669; }
+        .empty-state {
+            text-align: center;
+            padding: 30px 10px;
+            color: #64748B;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="header-logo">
             <img src="./src/icon.png" alt="Porkito Icon" class="icon-header">
-            <h2>Porkito</h2>
+            <div>
+                <h2>Porkito</h2>
+                <span id="userGreeting" style="font-size: 11px; color: #94A3B8; display: block;">Olá!</span>
+            </div>
         </div>
-        <i class="fa-regular fa-bell bell-icon"></i>
+        <i class="fa-regular fa-bell bell-icon" onclick="carregarDadosDashboard()" title="Atualizar dados"></i>
     </header>
 
     <main>
-        <!-- SALDO TOTAL -->
+        <!-- SALDO TOTAL / TOTAL GASTOS -->
         <div class="saldo">
-            <h1>Saldo Total</h1>
-            <h2>R$ 124.560,00</h2>
+            <h1>Total de Gastos</h1>
+            <h2 id="valorTotalGastos">R$ 0,00</h2>
         </div>
 
         <!-- GRÁFICO DE BARRAS (ÚLTIMOS 3 MESES) -->
         <div class="grafico-entradas-saidas">
             <div class="grafico-header">
-                <h2>Fluxo Financeiro <span class="periodo">(Últimos 3 Meses)</span></h2>
+                <h2>Fluxo de Gastos <span class="periodo">(Histórico Mensal)</span></h2>
                 <div class="grafico-legenda">
-                    <span class="legenda-item"><span class="ponto ponto-verde"></span> Entradas</span>
-                    <span class="legenda-item"><span class="ponto ponto-vermelho"></span> Saídas</span>
+                    <span class="legenda-item"><span class="ponto ponto-vermelho"></span> Despesas</span>
                 </div>
             </div>
             <div class="canvas-container">
@@ -49,63 +124,16 @@
                 <h2>Transações Recentes</h2>
             </div>
             
-            <div class="lista-transacoes-recentes">
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <div class="icone-badge badge-carrinho">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-                        <div class="detalhes">
-                            <h4>Supermercado</h4>
-                            <span>Hoje, 10:24</span>
-                        </div>
-                    </div>
-                    <span class="valor negativo">-R$ 124,50</span>
-                </div>
-
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <div class="icone-badge badge-salario">
-                            <i class="fa-solid fa-money-bill-wave"></i>
-                        </div>
-                        <div class="detalhes">
-                            <h4>Salário Depositado</h4>
-                            <span>Ontem, 09:00</span>
-                        </div>
-                    </div>
-                    <span class="valor positivo">+R$ 4.200,00</span>
-                </div>
-
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <div class="icone-badge badge-carro">
-                            <i class="fa-solid fa-car"></i>
-                        </div>
-                        <div class="detalhes">
-                            <h4>Seguro Automotivo</h4>
-                            <span>24 Out, 2023</span>
-                        </div>
-                    </div>
-                    <span class="valor negativo">-R$ 180,00</span>
-                </div>
-
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <div class="icone-badge badge-restaurante">
-                            <i class="fa-solid fa-utensils"></i>
-                        </div>
-                        <div class="detalhes">
-                            <h4>Jantar com Cliente</h4>
-                            <span>22 Out, 2023</span>
-                        </div>
-                    </div>
-                    <span class="valor negativo">-R$ 85,20</span>
+            <div class="lista-transacoes-recentes" id="listaTransacoesRecentes">
+                <div class="empty-state">
+                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 8px;"></i>
+                    <p>Carregando transações...</p>
                 </div>
             </div>
 
             <div class="transacoes-footer">
                 <a href="./pages/transacoes/transacoes.html" class="link-ver-todas">Ver Todas as Transações</a>
-                <button class="btn-flutuante" onclick="window.location.href='./pages/transacoes/transacoes.html'" title="Nova Transação">
+                <button class="btn-flutuante" onclick="abrirModalNovaTransacao()" title="Nova Transação">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
@@ -132,95 +160,262 @@
         </div>
     </div>
 
-    <!-- INICIALIZAÇÃO DO CHART.JS (BARRAS - ÚLTIMOS 3 MESES) -->
-    <script>
-        const ctx = document.getElementById('graficoFluxo').getContext('2d');
+    <!-- MODAL NOVA TRANSAÇÃO -->
+    <div class="modal-overlay" id="modalNovaTransacao">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Novo Gasto</h3>
+                <button class="modal-close" onclick="fecharModalNovaTransacao()">&times;</button>
+            </div>
+            <form class="modal-form" onsubmit="salvarNovaTransacao(event)">
+                <div class="form-group">
+                    <label for="inputDescricao">Descrição</label>
+                    <input type="text" id="inputDescricao" placeholder="Ex: Supermercado, Gasolina" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputValor">Valor (R$)</label>
+                    <input type="number" step="0.01" id="inputValor" placeholder="0,00" required>
+                </div>
+                <div class="form-group">
+                    <label for="selectCategoria">Categoria</label>
+                    <select id="selectCategoria">
+                        <option value="">Sem categoria</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="selectFormaPagamento">Forma de Pagamento</label>
+                    <select id="selectFormaPagamento">
+                        <option value="PIX">PIX</option>
+                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                        <option value="Cartão de Débito">Cartão de Débito</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Boleto">Boleto</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputData">Data</label>
+                    <input type="date" id="inputData" required>
+                </div>
+                <button type="submit" class="modal-btn-salvar" id="btnSalvarGasto">Registrar Gasto</button>
+            </form>
+        </div>
+    </div>
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Agosto', 'Setembro', 'Outubro'],
-                datasets: [
-                    {
-                        label: 'Entradas',
-                        data: [4800, 5600, 6250],
-                        backgroundColor: '#10B981',
-                        borderSkipped: false,
-                        barPercentage: 0.7,
-                        categoryPercentage: 0.6
-                    },
-                    {
-                        label: 'Saídas',
-                        data: [2900, 3450, 3120],
-                        backgroundColor: '#EF4444',
-                        borderSkipped: false,
-                        barPercentage: 0.7,
-                        categoryPercentage: 0.6
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#1E293B',
-                        titleColor: '#F8FAFC',
-                        bodyColor: '#F8FAFC',
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                        borderWidth: 1,
-                        titleFont: { family: 'Poppins', size: 12 },
-                        bodyFont: { family: 'Poppins', size: 13, weight: '600' },
-                        padding: 10,
-                        cornerRadius: 8,
-                        displayColors: true,
-                        boxWidth: 8,
-                        boxHeight: 8,
-                        usePointStyle: true,
-                        callbacks: {
-                            label: function(context) {
-                                return ' ' + context.dataset.label + ': R$ ' + context.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    <!-- SCRIPTS -->
+    <script src="api.js"></script>
+    <script>
+        verificarAutenticacao();
+
+        const usuario = getUsuarioLogado();
+        if (usuario && usuario.nome) {
+            document.getElementById('userGreeting').innerText = `Olá, ${usuario.nome}!`;
+        }
+
+        // Configuração de Data de Hoje no Modal
+        document.getElementById('inputData').value = new Date().toISOString().split('T')[0];
+
+        let chartInstance = null;
+        let listaCategorias = [];
+
+        function getIconeBadge(descricao, formaPagamento) {
+            const desc = (descricao || '').toLowerCase();
+            if (desc.includes('mercado') || desc.includes('padaria') || desc.includes('supermercado') || desc.includes('compras')) {
+                return { classe: 'badge-carrinho', icone: 'fa-cart-shopping' };
+            }
+            if (desc.includes('carro') || desc.includes('uber') || desc.includes('gasolina') || desc.includes('combustivel') || desc.includes('transporte')) {
+                return { classe: 'badge-carro', icone: 'fa-car' };
+            }
+            if (desc.includes('almoço') || desc.includes('jantar') || desc.includes('restaurante') || desc.includes('lanche') || desc.includes('pizza') || desc.includes('ifood')) {
+                return { classe: 'badge-restaurante', icone: 'fa-utensils' };
+            }
+            return { classe: 'badge-salario', icone: 'fa-money-bill-wave' };
+        }
+
+        async function carregarDadosDashboard() {
+            try {
+                // Carrega categorias e gastos simultaneamente
+                const [gastos, categorias] = await Promise.all([
+                    API.getGastos(),
+                    API.getCategorias()
+                ]);
+
+                listaCategorias = categorias || [];
+                atualizarSelectCategorias();
+
+                // Calcula total de gastos
+                const total = (gastos || []).reduce((acc, g) => acc + (Number(g.valor) || 0), 0);
+                document.getElementById('valorTotalGastos').innerText = formatarMoeda(total);
+
+                // Renderiza Transações Recentes
+                renderizarTransacoesRecentes(gastos || []);
+
+                // Atualiza Gráfico
+                atualizarGraficoFluxo(gastos || []);
+
+            } catch (error) {
+                console.error('Erro ao carregar dados do dashboard:', error);
+            }
+        }
+
+        function renderizarTransacoesRecentes(gastos) {
+            const container = document.getElementById('listaTransacoesRecentes');
+            if (!gastos || gastos.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-receipt" style="font-size: 28px; margin-bottom: 8px; color: #475569;"></i>
+                        <p>Nenhum gasto registrado ainda.</p>
+                        <p style="font-size: 12px; margin-top: 4px; color: #10B981; cursor: pointer;" onclick="abrirModalNovaTransacao()">+ Cadastrar primeiro gasto</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Ordena por data decrescente e pega os últimos 4
+            const recentes = [...gastos].sort((a, b) => new Date(b.data || 0) - new Date(a.data || 0)).slice(0, 4);
+
+            container.innerHTML = recentes.map(g => {
+                const badge = getIconeBadge(g.descricao, g.formaPagamento);
+                return `
+                    <div class="item-transacao">
+                        <div class="info-esquerda">
+                            <div class="icone-badge ${badge.classe}">
+                                <i class="fa-solid ${badge.icone}"></i>
+                            </div>
+                            <div class="detalhes">
+                                <h4>${g.descricao || 'Sem descrição'}</h4>
+                                <span>${formatarData(g.data)} • ${g.formaPagamento || 'Dinheiro'}</span>
+                            </div>
+                        </div>
+                        <span class="valor negativo">-${formatarMoeda(g.valor)}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function atualizarGraficoFluxo(gastos) {
+            const mesesNomes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+            const hoje = new Date();
+            const mesesLabels = [];
+            const dadosMeses = [0, 0, 0];
+
+            // Pega os últimos 3 meses
+            for (let i = 2; i >= 0; i--) {
+                const d = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+                mesesLabels.push(mesesNomes[d.getMonth()]);
+            }
+
+            // Soma os gastos por mês
+            (gastos || []).forEach(g => {
+                if (!g.data) return;
+                const dGasto = new Date(g.data + 'T00:00:00');
+                const diffMeses = (hoje.getFullYear() - dGasto.getFullYear()) * 12 + (hoje.getMonth() - dGasto.getMonth());
+                if (diffMeses >= 0 && diffMeses <= 2) {
+                    const index = 2 - diffMeses;
+                    dadosMeses[index] += Number(g.valor) || 0;
+                }
+            });
+
+            const ctx = document.getElementById('graficoFluxo').getContext('2d');
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: mesesLabels,
+                    datasets: [
+                        {
+                            label: 'Despesas',
+                            data: dadosMeses,
+                            backgroundColor: '#EF4444',
+                            borderSkipped: false,
+                            barPercentage: 0.6,
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1E293B',
+                            titleColor: '#F8FAFC',
+                            bodyColor: '#F8FAFC',
+                            padding: 10,
+                            callbacks: {
+                                label: function(context) {
+                                    return ' R$ ' + context.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+                                }
                             }
                         }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            font: {
-                                family: 'Poppins',
-                                size: 12,
-                                weight: '500'
-                            },
-                            color: '#94A3B8'
-                        }
                     },
-                    y: {
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.07)',
-                            drawBorder: false
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { family: 'Poppins', size: 12 }, color: '#94A3B8' }
                         },
-                        ticks: {
-                            font: {
-                                family: 'Poppins',
-                                size: 11
-                            },
-                            color: '#64748B',
-                            callback: function(value) {
-                                return 'R$ ' + (value >= 1000 ? (value / 1000) + 'k' : value);
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.07)' },
+                            ticks: {
+                                font: { family: 'Poppins', size: 11 },
+                                color: '#64748B',
+                                callback: function(value) {
+                                    return 'R$ ' + (value >= 1000 ? (value / 1000).toFixed(1) + 'k' : value);
+                                }
                             }
                         }
                     }
                 }
+            });
+        }
+
+        function atualizarSelectCategorias() {
+            const select = document.getElementById('selectCategoria');
+            select.innerHTML = '<option value="">Sem categoria</option>' +
+                listaCategorias.map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+        }
+
+        function abrirModalNovaTransacao() {
+            document.getElementById('modalNovaTransacao').style.display = 'flex';
+        }
+
+        function fecharModalNovaTransacao() {
+            document.getElementById('modalNovaTransacao').style.display = 'none';
+        }
+
+        async function salvarNovaTransacao(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSalvarGasto');
+            btn.disabled = true;
+
+            const categoriaId = document.getElementById('selectCategoria').value;
+            const payload = {
+                descricao: document.getElementById('inputDescricao').value.trim(),
+                valor: parseFloat(document.getElementById('inputValor').value),
+                categoria_id: categoriaId ? Number(categoriaId) : null,
+                formaPagamento: document.getElementById('selectFormaPagamento').value,
+                data: document.getElementById('inputData').value
+            };
+
+            try {
+                await API.criarGasto(payload);
+                fecharModalNovaTransacao();
+                document.getElementById('inputDescricao').value = '';
+                document.getElementById('inputValor').value = '';
+                await carregarDadosDashboard();
+            } catch (error) {
+                alert('Erro ao salvar gasto: ' + error.message);
+            } finally {
+                btn.disabled = false;
             }
-        });
+        }
+
+        // Carrega ao inicializar a página
+        carregarDadosDashboard();
     </script>
 </body>
 </html>

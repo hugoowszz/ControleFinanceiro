@@ -1,6 +1,6 @@
 // api.js - Centralizador de chamadas para o Backend Spring Boot
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://controlefinanceiroapi-1o7j.onrender.com';
 
 // Utilitários de Autenticação e Sessão
 function getAuthToken() {
